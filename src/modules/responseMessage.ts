@@ -1,5 +1,5 @@
 const message = {
-    // 전체적으로 쓰이는 코드
+  // 전체적으로 쓰이는 코드
   NULL_VALUE: '필요한 값이 없습니다.',
   FORBIDDEN: '접근 권한이 없습니다.',
   NOT_FOUND: '존재하지 않는 자원입니다.',
