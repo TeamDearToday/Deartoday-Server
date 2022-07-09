@@ -11,3 +11,5 @@ const OldMediaSchema = new mongoose.Schema({
     required: true
   }
 });
+
+export default mongoose.model<OldMediaInfo & mongoose.Document>('OldMedia', OldMediaSchema);
