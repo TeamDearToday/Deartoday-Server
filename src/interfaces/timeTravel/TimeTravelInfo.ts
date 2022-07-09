@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { MessageInfo } from "../message/MessageInfo";
 
 export interface TimeTravelInfo {
     userId: mongoose.Types.ObjectId;
