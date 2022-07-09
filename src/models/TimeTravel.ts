@@ -27,6 +27,10 @@ const TimeTravelSchema = new mongoose.Schema(
     day: {
         type: Number,
         requied: true
+    },
+    writtenDate: {
+        type: String,
+        required: true
     }
   },
   {
