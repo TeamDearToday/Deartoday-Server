@@ -36,10 +36,11 @@ const TimeTravelSchema = new mongoose.Schema(
         type: mongoose.Types.ObjectId,
         required: true,
         ref: "Message"
-    }],
-    
+    }]
   },
   {
     timestamps: true,
   },
 );
+
+export default mongoose.model<TimeTravelInfo & mongoose.Document>('TimeTravel', TimeTravelSchema);
