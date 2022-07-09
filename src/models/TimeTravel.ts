@@ -19,6 +19,10 @@ const TimeTravelSchema = new mongoose.Schema(
     year: {
         type: Number,
         required: true
+    },
+    month: {
+        type: Number,
+        required: true
     }
   },
   {
