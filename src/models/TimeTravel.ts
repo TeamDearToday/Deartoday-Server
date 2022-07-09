@@ -23,6 +23,10 @@ const TimeTravelSchema = new mongoose.Schema(
     month: {
         type: Number,
         required: true
+    },
+    day: {
+        type: Number,
+        requied: true
     }
   },
   {
