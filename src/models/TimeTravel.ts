@@ -31,7 +31,13 @@ const TimeTravelSchema = new mongoose.Schema(
     writtenDate: {
         type: String,
         required: true
-    }
+    },
+    messages: [{
+        type: mongoose.Types.ObjectId,
+        required: true,
+        ref: "Message"
+    }],
+    
   },
   {
     timestamps: true,
