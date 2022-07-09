@@ -11,4 +11,8 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    fcmTokens: {
+        type: [String],
+        required: true
+    }
 })
