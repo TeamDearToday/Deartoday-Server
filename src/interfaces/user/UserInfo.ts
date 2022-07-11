@@ -1,6 +1,9 @@
+import mongoose from 'mongoose';
+
 export interface UserInfo {
-    socialType: string;
-    socialToken: string;
-    jwtToken: string;
-    fcmTokens: string[];
+  _id: mongoose.Schema.Types.ObjectId;
+  socialType: string;
+  socialToken: string;
+  jwtToken: string;
+  fcmTokens: string[];
 }
