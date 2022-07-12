@@ -4,6 +4,7 @@ import statusCode from '../modules/statusCode';
 import message from '../modules/responseMessage';
 import util from '../modules/util';
 import config from "../config";
+import User from '../models/User';
 
 const isAuth = async (req: Request, res: Response, next: NextFunction) => {
   const accessToken = req.header('accessToken');
@@ -12,15 +13,20 @@ const isAuth = async (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
-    // 액세스 토큰 해독 verify
-    const decodedToken = jwt.verify(accessToken, config.jwtSecret);
-    // 에러처리
-    // userId = decodedToken.id
-    // const user = User.findOne(userId)
-    // if(!user) 유저없음~
-    // req.user = user;
-    // next();
-  } catch (error) {}
+    // verify token
+    const decoded = jwt.verify(accessToken, config.jwtSecret);
+    const user = await User.findById((decoded as any).user.id);
+
+    // no user
+    if (!user) {
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.NO_USER));
+    }
+
+    req.user = user;
+    return next();
+  } catch (error) {
+    
+  }
 };
 
 const authUtil = {
