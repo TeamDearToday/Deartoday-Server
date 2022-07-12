@@ -6,7 +6,7 @@ import util from '../modules/util';
 import config from "../config";
 import User from '../models/User';
 
-const isAuth = async (req: Request, res: Response, next: NextFunction) => {
+export const isAuth = async (req: Request, res: Response, next: NextFunction) => {
   const accessToken = req.header('accessToken');
   if (!accessToken) {
     return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.NO_TOKEN));
@@ -24,16 +24,19 @@ const isAuth = async (req: Request, res: Response, next: NextFunction) => {
 
     req.user = user;
     return next();
-  } catch (error) {
-    
+  } catch (error: any) {
+    if (error.name === 'TokenExpiredError') {
+      return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.INVALID_TOKEN));
+    }
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
   }
 };
 
-const authUtil = {
-  isAuth,
-};
+// const authUtil = {
+//   isAuth,
+// };
 
-export default authUtil;
+// export default authUtil;
 
 // route.use(authUtil.isAuth);
 /// 이 아래로 저 미들웨어 다 적용
