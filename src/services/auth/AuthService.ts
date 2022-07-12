@@ -2,6 +2,11 @@ import axios from "axios";
 import User from "../../models/User";
 import getToken from "../../modules/jwtHandler";
 
+// 카카오랑 통신하기 -> 유저 정보 가져와
+  // 토큰 발급
+  // 유저 확인하기 -> 있으면 바로 리턴 (토큰은 발급해줘야징)
+  // 없으면 -> 유저정보 디비에 넣어줘 create + 토큰 발급해주기
+  // 토큰 리턴
 const kakaoLogin = async (token: string) => {
   const user = await axios({
     method: 'get',
@@ -12,30 +17,28 @@ const kakaoLogin = async (token: string) => {
   });
 
   const userId = user.data.id;
+  let jwtToken;
 
   if (!userId) {
     const user = new User({
-      socialType: 'KAKAO'
-    })
+      socialType: 'KAKAO',
+    });
 
     await user.save();
 
     const data = {
-      _id: user.id
+      _id: user.id,
     };
 
-    
+    jwtToken = getToken(data._id);
+    user.accessToken = jwtToken;
+
+    await user.save();
+  } else {
+    jwtToken = getToken(user.data._id);
+    user.data.accessToken = jwtToken;
   }
-  // 카카오랑 통신하기 -> 유저 정보 가져와
-
-  // 토큰 발급
-
-  // 유저 확인하기 -> 있으면 바로 리턴 (토큰은 발급해줘야징)
-
-  // 없으면 -> 유저정보 디비에 넣어줘 create + 토큰 발급해주기
-
-  // 토큰 리턴
-  return {};
+  return jwtToken;
 };
 
 const appleLogin = async (token: string) => {
