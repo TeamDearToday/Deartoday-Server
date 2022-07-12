@@ -1,4 +1,6 @@
 import axios from "axios";
+import User from "../../models/User";
+import getToken from "../../modules/jwtHandler";
 
 const kakaoLogin = async (token: string) => {
   const user = await axios({
@@ -12,7 +14,10 @@ const kakaoLogin = async (token: string) => {
   const userId = user.data.id;
 
   if (!userId) {
-    
+    const user = new User({
+      socialType: 'KAKAO',
+      accessToken: getToken()
+    })
   }
   // 카카오랑 통신하기 -> 유저 정보 가져와
 
