@@ -9,6 +9,9 @@ const message = {
   INVALID_TOKEN: '만료된 토큰입니다.',
   INVALID_PASSWORD: '비밀번호 오류입니다.',
 
+  // 유저 관련
+  NO_USER: '유저가 존재하지 않습니다.',
+
   // 로그인 관련
   UNDEFINED_SOCIAL_TYPE: '소셜 타입이 잘못되었습니다.',
 
