@@ -4,7 +4,7 @@ import { UserInfo } from "../interfaces/user/UserInfo";
 const UserSchema = new mongoose.Schema({
     socialType: {
         type: String,
-        enum: ['kakao', 'apple'],
+        enum: ['KAKAO', 'APPLE'],
         required: true
     },
     accessToken: {
