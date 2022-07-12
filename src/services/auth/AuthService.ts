@@ -15,9 +15,16 @@ const kakaoLogin = async (token: string) => {
 
   if (!userId) {
     const user = new User({
-      socialType: 'KAKAO',
-      accessToken: getToken()
+      socialType: 'KAKAO'
     })
+
+    await user.save();
+
+    const data = {
+      _id: user.id
+    };
+
+    
   }
   // 카카오랑 통신하기 -> 유저 정보 가져와
 

@@ -1,3 +1,3 @@
-export interface UserInfo {
+export interface UserCreateDto {
   socialType: string;
 }

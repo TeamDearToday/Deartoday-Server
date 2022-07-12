@@ -15,6 +15,7 @@ export const isAuth = async (req: Request, res: Response, next: NextFunction) =>
   try {
     // verify token
     const decoded = jwt.verify(accessToken, config.jwtSecret);
+    // TODO: any 없애기
     const user = await User.findById((decoded as any).user.id);
 
     // no user
