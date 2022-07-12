@@ -1,4 +1,4 @@
-export interface TimeTravelDto {
+export interface TimeTravelCreateDto {
   title: string;
   image: string;
   year: number;
