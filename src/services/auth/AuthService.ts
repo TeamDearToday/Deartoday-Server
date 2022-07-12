@@ -1,4 +1,19 @@
-const kakaoLogin = async (token: String) => {
+import axios from "axios";
+
+const kakaoLogin = async (token: string) => {
+  const user = await axios({
+    method: 'get',
+    url: 'https://kapi.kakao.com/v2/user/me',
+    headers: {
+      accessToken: `Bearer ${token}`,
+    },
+  });
+
+  const userId = user.data.id;
+
+  if (!userId) {
+    
+  }
   // 카카오랑 통신하기 -> 유저 정보 가져와
 
   // 토큰 발급
@@ -11,7 +26,7 @@ const kakaoLogin = async (token: String) => {
   return {};
 };
 
-const appleLogin = async (token: String) => {
+const appleLogin = async (token: string) => {
   // jwt decode 하면 그냥 바로 유저정보 가져올 수 있어 통신 안해도
     
   // 토큰 발급
