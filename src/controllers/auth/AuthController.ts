@@ -7,7 +7,7 @@ import { UserLoginDto } from '../../interfaces/user/UserLoginDto';
 
 
 /**
- *  @route Post /auth/login/:social
+ *  @route Post /login/:social
  *  @desc social login
  *  @access Public
  */
@@ -19,7 +19,7 @@ const socialLogin = async (req: Request, res: Response, next: NextFunction) => {
     let data;
     switch (social) {
       case 'KAKAO':
-        data = AuthService.kakaoLogin(userLoginDto);
+        data = await AuthService.kakaoLogin(userLoginDto);
         break;
       case 'APPLE':
         // data = AuthService.appleLogin(소셜토큰 넘겨주기, fcmToken);
@@ -27,7 +27,7 @@ const socialLogin = async (req: Request, res: Response, next: NextFunction) => {
       default:
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.UNDEFINED_SOCIAL_TYPE));
     }
-    // return 해주기
+    res.status(statusCode.OK).send(util.success(statusCode.OK, message.SIGNIN_USER_SUCCESS, data));
   } catch (error) {
     console.log(error);
     res.status(statusCode.INTERNAL_SERVER_ERROR).send;
