@@ -1,6 +1,5 @@
 export interface UserInfo {
     socialType: string;
-    socialToken: string;
-    jwtToken: string;
+    accessToken: string;
     fcmTokens: string[];
 }
