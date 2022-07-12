@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import statusCode from '../modules/statusCode';
 import message from '../modules/responseMessage';
 import util from '../modules/util';
+import config from "../config";
 
 const isAuth = async (req: Request, res: Response, next: NextFunction) => {
   const accessToken = req.header('accessToken');
@@ -12,6 +13,7 @@ const isAuth = async (req: Request, res: Response, next: NextFunction) => {
 
   try {
     // 액세스 토큰 해독 verify
+    const decodedToken = jwt.verify(accessToken, config.jwtSecret);
     // 에러처리
     // userId = decodedToken.id
     // const user = User.findOne(userId)
