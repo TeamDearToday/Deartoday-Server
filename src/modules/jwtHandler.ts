@@ -10,7 +10,7 @@ const getToken = (userId: mongoose.Schema.Types.ObjectId): string => {
     },
   };
 
-  const accessToken: string = jwt.sign(payload, config.jwtSecret, { expiresIn: '2h' });
+  const accessToken: string = jwt.sign(payload, config.jwtSecret, { expiresIn: '1h' });
 
   return accessToken;
 };
