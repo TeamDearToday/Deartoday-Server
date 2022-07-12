@@ -9,8 +9,11 @@ const message = {
   INVALID_TOKEN: '만료된 토큰입니다.',
   INVALID_PASSWORD: '비밀번호 오류입니다.',
 
-  // 로그인
+  // 로그인 관련
   UNDEFINED_SOCIAL_TYPE: '소셜 타입이 잘못되었습니다.',
+
+  // 토큰 관련
+  NO_TOKEN: '토큰 값이 요청되지 않았습니다.',
 };
 
 export default message;
