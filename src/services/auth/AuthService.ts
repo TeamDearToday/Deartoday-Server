@@ -1,4 +1,5 @@
 import axios from "axios";
+import { UserLoginDto } from "../../interfaces/user/UserLoginDto";
 import User from "../../models/User";
 import getToken from "../../modules/jwtHandler";
 
@@ -7,12 +8,12 @@ import getToken from "../../modules/jwtHandler";
   // 유저 확인하기 -> 있으면 바로 리턴 (토큰은 발급해줘야징)
   // 없으면 -> 유저정보 디비에 넣어줘 create + 토큰 발급해주기
   // 토큰 리턴
-const kakaoLogin = async (token: string) => {
+const kakaoLogin = async (userLoginDto: UserLoginDto) => {
   const user = await axios({
     method: 'get',
     url: 'https://kapi.kakao.com/v2/user/me',
     headers: {
-      accessToken: `Bearer ${token}`,
+      accessToken: `Bearer ${userLoginDto.socialToken}`,
     },
   });
 
