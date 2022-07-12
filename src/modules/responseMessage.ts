@@ -11,6 +11,7 @@ const message = {
 
   // 유저 관련
   NO_USER: '유저가 존재하지 않습니다.',
+  SIGNIN_USER_SUCCESS: '로그인 성공',
 
   // 로그인 관련
   UNDEFINED_SOCIAL_TYPE: '소셜 타입이 잘못되었습니다.',
