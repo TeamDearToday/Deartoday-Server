@@ -1,10 +1,13 @@
 import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
+import statusCode from '../modules/statusCode';
+import message from '../modules/responseMessage';
+import util from '../modules/util';
 
 const isAuth = async (req: Request, res: Response, next: NextFunction) => {
-  const { accessToken } = req.headers;
+  const accessToken = req.header('accessToken');
   if (!accessToken) {
-    // return 토큰이 비어잇습니다.;
+    return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.NO_TOKEN));
   }
 
   try {
