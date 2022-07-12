@@ -7,6 +7,10 @@ const UserSchema = new mongoose.Schema({
         enum: ['kakao', 'apple'],
         required: true
     },
+    accessToken: {
+        type: String,
+        required: true
+    },
     fcmTokens: {
         type: [String],
         required: true
