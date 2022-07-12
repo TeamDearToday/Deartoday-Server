@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
         enum: ['kakao', 'apple'],
         required: true
     },
-    socialToken: {
+    accessToken: {
         type: String,
         required: true
     },
