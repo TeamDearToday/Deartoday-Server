@@ -55,6 +55,14 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
 const appleLogin = async (userLoginDto: UserLoginDto) => {
   try {
     const user = jwt.decode(userLoginDto.socialToken);
+
+    // 애플 유저 토큰 에러
+    if (user === null) {
+      return null;
+    }
+    if (!(user as jwt.JwtPayload).sub) {
+      return exceptionMessage.INVALID_USER;
+    }
   }
   // jwt decode 하면 그냥 바로 유저정보 가져올 수 있어 통신 안해도
 
