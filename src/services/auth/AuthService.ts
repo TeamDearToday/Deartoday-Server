@@ -19,6 +19,10 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
   let jwtToken;
 
   if (!userId) {
+    return null;
+  }
+
+  if (!user.data.kakao_account) {
     const user = new User({
       socialType: 'KAKAO',
     });
