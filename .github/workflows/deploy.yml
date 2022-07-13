@@ -1,0 +1,46 @@
+# This is a basic workflow to help you get started with Actions
+
+name: deploy
+
+on:
+  push:
+    branches: [ "develop/1.0.0" ]
+  pull_request:
+    branches: [ "develop/1.0.0" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    strategy:
+      matrix:
+        node-version: [16.15.1]
+
+    steps:
+      - name: Checkout source code.
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Check Npm -v
+        run: npm -v
+
+      - name: create env file
+        working-directory: ./
+        run: |
+          pwd
+          touch .env
+          echo PORT=${{ secrets.PORT }} >> .env
+          echo MONGODB_URI=${{ secrets.MONGODB_URI }} >> .env
+          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
+          echo JWT_ALGO=${{ secrets.JWT_ALGO }} >> .env
+          cat .env
+
+      - name: build server files
+        working-directory: ./
+        run: |
+          yarn
+          yarn run build
