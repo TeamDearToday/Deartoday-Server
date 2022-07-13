@@ -6,7 +6,7 @@ const message = {
   BAD_REQUEST: '잘못된 문법으로 인하여 서버가 요청을 이해할 수 없습니다.',
   INTERNAL_SERVER_ERROR: '서버 잘못입니다.',
   NULL_VALUE_TOKEN: '토큰이 없습니다.',
-  INVALID_TOKEN: '만료된 토큰입니다.',
+  INVALID_TOKEN: '유효하지 않은 토큰입니다.',
   INVALID_PASSWORD: '비밀번호 오류입니다.',
 
   // 유저 관련

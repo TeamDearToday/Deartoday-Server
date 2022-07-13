@@ -20,9 +20,6 @@ const socialLogin = async (req: Request, res: Response, next: NextFunction) => {
     switch (social) {
       case 'KAKAO':
         data = await AuthService.kakaoLogin(userLoginDto);
-        data = {
-          accessToken: data
-        };
         break;
       case 'APPLE':
         // data = AuthService.appleLogin(userLoginDto);
@@ -30,6 +27,13 @@ const socialLogin = async (req: Request, res: Response, next: NextFunction) => {
       default:
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.UNDEFINED_SOCIAL_TYPE));
     }
+
+    if (data === null) {
+      return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.INVALID_TOKEN));
+    }
+    data = {
+          accessToken: data
+        };
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.SIGNIN_USER_SUCCESS, data));
   } catch (error) {
     console.log(error);
