@@ -9,21 +9,28 @@ import getToken from "../../modules/jwtHandler";
   // 없으면 -> 유저정보 디비에 넣어줘 create + 토큰 발급해주기
   // 토큰 리턴
 const kakaoLogin = async (userLoginDto: UserLoginDto) => {
-  const user = await axios.get('https://kapi.kakao.com/v2/user/me', {
+  const kakaoUser = await axios.get('https://kapi.kakao.com/v2/user/me', {
     headers: {
       Authorization: `Bearer ${userLoginDto.socialToken}`,
     },
   });
 
-  const userId = user.data.id;
-  let jwtToken;
+  const kakaoUserId = kakaoUser.data.id;
 
   // 카카오 계정이 있는지 체크
-  if (!userId) {
+  if (!kakaoUserId) {
     return null;
   }
 
-  if (!user.data.kakao_account) {
+  let jwtToken;
+
+  // const user = await User.find({
+  //   email: kakaoUser.data.kakao_account
+  // });
+
+  // console.log(user);
+
+  if (!kakaoUser.data.kakao_account) {
     const user = new User({
       socialType: 'KAKAO',
     });
@@ -39,8 +46,8 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
 
     await user.save();
   } else {
-    jwtToken = getToken(user.data._id);
-    user.data.accessToken = jwtToken;
+    jwtToken = getToken(kakaoUser.data._id);
+    kakaoUser.data.accessToken = jwtToken;
     console.log('haaaaaaa');
   }
   return jwtToken;
