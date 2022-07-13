@@ -46,7 +46,7 @@ jobs:
           yarn run build
           
       - name: zip file
-        run: zip -r hous.zip ./dist ./scripts ./appspec.yml ./.env ./package.json
+        run: zip -r deartoday.zip ./dist ./scripts ./appspec.yml ./.env ./package.json
 
       - name: AWS configure credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -56,11 +56,11 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: upload to S3
-        run: aws s3 cp --region ap-northeast-2 ./hous.zip s3://hous-build/deploy/
+        run: aws s3 cp --region ap-northeast-2 ./deartoday.zip s3://deartoday-build/deploy/
 
       - name: deploy with AWS codeDeploy
         run: aws deploy create-deployment
-          --application-name hous-codedeploy
+          --application-name deartoday-codedeploy
           --deployment-config-name CodeDeployDefault.OneAtATime
           --deployment-group-name GROUP
-          --s3-location bucket=hous-build,bundleType=zip,key=deploy/hous.zip
+          --s3-location bucket=hous-build,bundleType=zip,key=deploy/deartoday.zip
