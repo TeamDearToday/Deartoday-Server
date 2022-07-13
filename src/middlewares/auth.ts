@@ -28,7 +28,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.NO_USER));
     }
 
-    req.body.user = user;
+    req.body.userId = userId;
     // 다음으로 넘기기
     next();
   } catch (error: any) {

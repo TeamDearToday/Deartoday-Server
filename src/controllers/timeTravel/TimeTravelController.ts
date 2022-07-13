@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { isAuth } from '../../middlewares/auth';
 import statusCode from '../../modules/statusCode';
 import TimeTravelService from '../../services/timetravel/TimeTravelService';
 
@@ -10,8 +9,7 @@ import TimeTravelService from '../../services/timetravel/TimeTravelService';
  */
 
 const getTimeTravelCount = async (req: Request, res: Response) => {
-  const ab = isAuth;
-  const accessToken =
+  const user = req.body.user;
   try {
     const data = await TimeTravelService.getTimeTravelCount(userId);
   }
