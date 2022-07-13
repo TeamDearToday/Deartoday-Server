@@ -10,7 +10,6 @@ import exceptionMessage from '../../modules/exceptionMessage';
 // 없으면 -> 유저정보 디비에 넣어줘 create + 토큰 발급해주기
 // 토큰 리턴
 const kakaoLogin = async (userLoginDto: UserLoginDto) => {
-  let kakaoUserData;
   try {
     const kakaoUser = await axios.get('https://kapi.kakao.com/v2/user/me', {
       headers: {
@@ -18,7 +17,7 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
       },
     });
 
-    kakaoUserData = kakaoUser.data;
+    const kakaoUserData = kakaoUser.data;
 
     // 카카오 계정이 있는지 체크
     if (!kakaoUserData.id) {
