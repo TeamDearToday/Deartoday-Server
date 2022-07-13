@@ -45,6 +45,8 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
     }
 
     // 유저가 db에 있으면 로그인
+    existUser.accessToken = getToken(existUser.id);
+    await User.findByIdAndUpdate(existUser._id, existUser);
     return existUser.accessToken;
   } catch (error) {
     console.log('kakao token error');
