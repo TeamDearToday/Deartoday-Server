@@ -16,14 +16,13 @@ const socialLogin = async (req: Request, res: Response, next: NextFunction) => {
   const userLoginDto: UserLoginDto = req.body;
 
   try {
-    let result;
     let data;
     switch (social) {
       case 'KAKAO':
         data = await AuthService.kakaoLogin(userLoginDto);
-        // data = {
-        //   accessToken: result.
-        // }
+        data = {
+          accessToken: data
+        };
         break;
       case 'APPLE':
         // data = AuthService.appleLogin(소셜토큰 넘겨주기, fcmToken);
