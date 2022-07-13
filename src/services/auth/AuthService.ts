@@ -18,6 +18,7 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
   const userId = user.data.id;
   let jwtToken;
 
+  // 카카오 계정이 있는지 체크
   if (!userId) {
     return null;
   }
