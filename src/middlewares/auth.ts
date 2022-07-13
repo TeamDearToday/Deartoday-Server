@@ -1,28 +1,43 @@
 import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
+import statusCode from '../modules/statusCode';
+import message from '../modules/responseMessage';
+import util from '../modules/util';
+import config from "../config";
+import User from '../models/User';
 
-const isAuth = async (req: Request, res: Response, next: NextFunction) => {
-  const { accessToken } = req.headers;
+export const isAuth = async (req: Request, res: Response, next: NextFunction) => {
+  const accessToken = req.header('accessToken');
   if (!accessToken) {
-    // return 토큰이 비어잇습니다.;
+    return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.NO_TOKEN));
   }
 
   try {
-    // 액세스 토큰 해독 verify
-    // 에러처리
-    // userId = decodedToken.id
-    // const user = User.findOne(userId)
-    // if(!user) 유저없음~
-    // req.user = user;
-    // next();
-  } catch (error) {}
+    // verify token
+    const decoded = jwt.verify(accessToken, config.jwtSecret);
+    // TODO: any 없애기
+    const user = await User.findById((decoded as any).user.id);
+
+    // no user
+    if (!user) {
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.NO_USER));
+    }
+
+    req.user = user;
+    return next();
+  } catch (error: any) {
+    if (error.name === 'TokenExpiredError') {
+      return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.INVALID_TOKEN));
+    }
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
 };
 
-const authUtil = {
-  isAuth,
-};
+// const authUtil = {
+//   isAuth,
+// };
 
-export default authUtil;
+// export default authUtil;
 
 // route.use(authUtil.isAuth);
 /// 이 아래로 저 미들웨어 다 적용
