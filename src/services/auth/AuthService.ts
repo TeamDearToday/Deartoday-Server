@@ -23,19 +23,20 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
       socialType: 'KAKAO',
     });
 
-    await user.save();
-
     const data = {
       _id: user.id,
     };
 
     jwtToken = getToken(data._id);
     user.accessToken = jwtToken;
+    user.fcmTokens = [];
+    console.log("hjihih");
 
     await user.save();
   } else {
     jwtToken = getToken(user.data._id);
     user.data.accessToken = jwtToken;
+    console.log('haaaaaaa');
   }
   return jwtToken;
 };
