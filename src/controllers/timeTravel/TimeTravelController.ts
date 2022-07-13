@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { isAuth } from '../../middlewares/auth';
 import statusCode from '../../modules/statusCode';
 import TimeTravelService from '../../services/timetravel/TimeTravelService';
 
@@ -8,7 +9,13 @@ import TimeTravelService from '../../services/timetravel/TimeTravelService';
  *  @access Public
  */
 
-const getTimeTravelCount = async (req: Request, res: Response) => {};
+const getTimeTravelCount = async (req: Request, res: Response) => {
+  const ab = isAuth;
+  const accessToken =
+  try {
+    const data = await TimeTravelService.getTimeTravelCount(userId);
+  }
+};
 
 /**
  *  @route Get /oldMedia

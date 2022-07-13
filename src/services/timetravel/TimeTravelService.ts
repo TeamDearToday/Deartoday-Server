@@ -28,5 +28,7 @@ const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | 
   }
 };
 
-const TimeTravelService = {};
+const TimeTravelService = {
+    getTimeTravelCount,
+};
 export default TimeTravelService;
