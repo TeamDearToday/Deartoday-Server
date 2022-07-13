@@ -3,6 +3,7 @@ import { UserLoginDto } from '../../interfaces/user/UserLoginDto';
 import User from '../../models/User';
 import getToken from '../../modules/jwtHandler';
 import exceptionMessage from '../../modules/exceptionMessage';
+import jwt from 'jsonwebtoken';
 
 // 카카오랑 통신하기 -> 유저 정보 가져와
 // 토큰 발급
@@ -52,6 +53,9 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
 };
 
 const appleLogin = async (userLoginDto: UserLoginDto) => {
+  try {
+    const user = jwt.decode(userLoginDto.socialToken);
+  }
   // jwt decode 하면 그냥 바로 유저정보 가져올 수 있어 통신 안해도
 
   // 토큰 발급
