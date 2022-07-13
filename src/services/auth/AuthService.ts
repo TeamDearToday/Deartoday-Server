@@ -19,24 +19,26 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
     });
 
     kakaoUserData = kakaoUser.data;
+    console.log(kakaoUserData);
 
     // 카카오 계정이 있는지 체크
     if (!kakaoUserData.id) {
       return exceptionMessage.INVALID_USER;
     }
+
+    if(!kakaoUserData.kakao_account) {
+      return {
+
+      }
+    }
+
+    console.log(kakaoUser.data.kakao_account.email);
   } catch (error) {
     console.log('kakao token error');
     return null;
   }
 
   let jwtToken;
-
-  // const user = await User.find({
-  //   email: kakaoUser.data.kakao_account
-  // });
-
-  // console.log(user);
-
   if (!kakaoUserData.kakao_account) {
     const user = new User({
       socialType: 'KAKAO',

@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
     enum: ['KAKAO', 'APPLE'],
     required: true,
   },
-  email: {
+  socialId: {
     type: String,
     required: true,
   },
