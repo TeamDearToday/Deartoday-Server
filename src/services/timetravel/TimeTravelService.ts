@@ -30,7 +30,8 @@ const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | 
 
 const getQuestion = async (): Promise<GetQuestionDto | null> => {
   try {
-    const data = 
+    const data = getRandomQuestions();
+    return data;
   } catch (error) {
     console.log(error);
     throw error;
