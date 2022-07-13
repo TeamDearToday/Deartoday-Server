@@ -19,7 +19,6 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
     });
 
     kakaoUserData = kakaoUser.data;
-    console.log(kakaoUserData);
 
     // 카카오 계정이 있는지 체크
     if (!kakaoUserData.id) {
@@ -53,7 +52,7 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
   }
 };
 
-const appleLogin = async (token: string) => {
+const appleLogin = async (userLoginDto: UserLoginDto) => {
   // jwt decode 하면 그냥 바로 유저정보 가져올 수 있어 통신 안해도
 
   // 토큰 발급
