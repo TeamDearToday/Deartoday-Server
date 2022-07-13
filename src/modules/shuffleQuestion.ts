@@ -1,4 +1,10 @@
+import dayjs from "dayjs";
 
+const now = dayjs();
+
+const year = now.get("year");
+const month = now.get("month") + 1;
+const date = now.get("date");
 
 const question1 = ['이 순간에 대해 설명해줄 수 있어?', '이때 어떤 일이 있었는지 설명해줄 수 있어?', '이때가 어떤 순간이었는지 설명해줄 수 있을까?', '이때가 어떤 순간이었는지 궁금해!'];
 const question2 = [
@@ -20,7 +26,7 @@ const question5 = [
   '그렇다면, 이때의 경험은 너에게 어떤 의미를 가지는 것 같아?',
   '그렇다면, 이때의 경험이 가지는 의미를 새롭게 생각해볼 수 있지 않을까?',
 ];
-const question6 = ['너의 오늘은 어때?', '너의 지금은 어때?', '너의 2022년은 어때?', '너의 2022년 X월 X일은 어때?'];
+const question6 = ['너의 오늘은 어때?', '너의 지금은 어때?', `너의 ${year}년은 어때?`, `너의 ${year}년 ${month}월 ${date}일은 어때?`];
 const lastMessage = [
   ['너의 오늘은,\n나에게는 살아보고 싶고 정말 기대되는 날이고,\n미래의 우리에게는 너무나도 돌아가고 싶고 그리울, 소중한 좋은 때일 거야.', '그러니 행복한 오늘에 하루하루 최선을 다해 살 수 있기를 :)'],
   ['너의 소중한 오늘은,\n10년 후에도, 20년 후에도,\n정말 되돌아가고 싶고 되돌리고 싶어할 바로 그 순간일 거야.', '그러니 행복한 오늘에 하루하루 최선을 다해 살 수 있기를 :)'],
@@ -43,8 +49,12 @@ const getRandomQuestions = () => {
 
     const resultLastMessage = shuffleAndSelect(lastMessage);
 
-    console.log(resultQuestion);
-    console.log(resultLastMessage);
+    const result = {
+        questions: resultQuestion,
+        lastMessage: resultLastMessage
+    };
+
+    return result;
 }
 
-getRandomQuestions();
+export default getRandomQuestions;
