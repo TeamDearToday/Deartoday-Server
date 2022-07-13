@@ -63,4 +63,4 @@ jobs:
           --application-name deartoday-codedeploy
           --deployment-config-name CodeDeployDefault.OneAtATime
           --deployment-group-name GROUP
-          --s3-location bucket=hous-build,bundleType=zip,key=deploy/deartoday.zip
+          --s3-location bucket=deartoday,bundleType=zip,key=deploy/deartoday.zip
