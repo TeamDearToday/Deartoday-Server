@@ -10,8 +10,9 @@
     "build": "tsc && node dist"
   },
   "dependencies": {
-    "aws-sdk": "^2.1172.0",
+    "aws-sdk": "^2.1173.0",
     "bcryptjs": "^2.4.3",
+    "dayjs": "^1.11.3",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-validator": "^6.14.2",
