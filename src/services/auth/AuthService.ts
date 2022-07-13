@@ -26,40 +26,31 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
       return exceptionMessage.INVALID_USER;
     }
 
-    if(!kakaoUserData.kakao_account) {
-      return {
+    const existUser = await User.findOne({
+      socialId: kakaoUserData.id as string
+    });
 
-      }
+    // 유저가 db에 없는 경우 유저 회원 가입
+    if (!existUser) {
+      const user = new User({
+        socialType: 'KAKAO',
+        socialId: kakaoUserData.id as string,
+        fcmTokens: [],
+      });
+
+      const jwtToken = getToken(user.id);
+      user.accessToken = jwtToken;
+      await user.save();
+
+      return jwtToken;
     }
 
-    console.log(kakaoUser.data.kakao_account.email);
+    // 유저가 db에 있으면 로그인
+    return existUser.accessToken;
   } catch (error) {
     console.log('kakao token error');
     return null;
   }
-
-  let jwtToken;
-  if (!kakaoUserData.kakao_account) {
-    const user = new User({
-      socialType: 'KAKAO',
-    });
-
-    const data = {
-      _id: user.id,
-    };
-
-    jwtToken = getToken(data._id);
-    user.accessToken = jwtToken;
-    user.fcmTokens = [];
-    console.log('hjihih');
-
-    await user.save();
-  } else {
-    jwtToken = getToken(kakaoUserData._id);
-    kakaoUserData.accessToken = jwtToken;
-    console.log('haaaaaaa');
-  }
-  return jwtToken;
 };
 
 const appleLogin = async (token: string) => {
