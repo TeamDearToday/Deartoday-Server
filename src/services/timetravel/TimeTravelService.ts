@@ -40,5 +40,6 @@ const getQuestion = async (): Promise<GetQuestionDto | null> => {
 
 const TimeTravelService = {
   getTimeTravelCount,
+  getQuestion,
 };
 export default TimeTravelService;

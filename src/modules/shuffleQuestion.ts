@@ -47,7 +47,7 @@ const getRandomQuestions = () => {
     resultQuestion.push(shuffleAndSelect(question5) as string);
     resultQuestion.push(shuffleAndSelect(question6) as string);
 
-    const resultLastMessage = shuffleAndSelect(lastMessage);
+    const resultLastMessage: string[] = shuffleAndSelect(lastMessage) as string[];
 
     const result = {
         questions: resultQuestion,
