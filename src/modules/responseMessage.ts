@@ -8,6 +8,10 @@ const message = {
   NULL_VALUE_TOKEN: '토큰이 없습니다.',
   INVALID_TOKEN: '만료된 토큰입니다.',
   INVALID_PASSWORD: '비밀번호 오류입니다.',
+
+  // TimeTravel
+  NO_IMAGE_FILE: '이미지가 없습니다.',
+  CREATE_TIMETRAVEL: '시간여행을 생성했습니다.',
 };
 
 export default message;

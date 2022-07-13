@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import statusCode from '../../modules/statusCode';
+import util from '../../modules/util';
+import message from '../../modules/responseMessage';
 import TimeTravelService from '../../services/timetravel/TimeTravelService';
+import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
 
 /**
  *  @route Get /count
@@ -58,7 +61,36 @@ const getTimeTravelList = async (req: Request, res: Response) => {};
  *  @access Public
  */
 
-const postTimeTravel = async (req: Request, res: Response) => {};
+const postTimeTravel = async (req: Request, res: Response) => {
+  if (!req.file) {
+    return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
+  }
+
+  const imageFile: Express.MulterS3.File = req.file as Express.MulterS3.File;
+  const { originalname, location } = imageFile;
+
+  const timeTravelCreateDto: TimeTravelCreateDto = {
+    userId: req.body.userId,
+    title: req.body.title,
+    image: imageFile.location,
+    year: req.body.year,
+    month: req.body.month,
+    day: req.body.day,
+    currentDate: req.body.currentDate,
+    questions: req.body.questions,
+    answers: req.body.answers,
+  };
+
+  try {
+    // const data = await TimeTravelService.postTimeTravel(location, originalname);
+    const data = await TimeTravelService.postTimeTravel(timeTravelCreateDto);
+
+    res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, message.CREATE_TIMETRAVEL, data));
+  } catch (error) {
+    console.log(error);
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
+};
 
 const TimeTravelController = {
   getTimeTravelCount,

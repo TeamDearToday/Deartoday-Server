@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import upload from '../config/multerConfig';
 import TimeTravelController from '../controllers/timeTravel/TimeTravelController';
 
 const router: Router = Router();
@@ -13,7 +14,7 @@ router.get('/oldMedia', TimeTravelController.getOldMedia);
 router.get('/question', TimeTravelController.getQuestion);
 
 // 시간여행 가상공간 - 질문, 대답, 과거사진, 날짜, 제목 쓰기
-router.post('/', TimeTravelController.postTimeTravel);
+router.post('/', upload.single('file'), TimeTravelController.postTimeTravel);
 
 // 메세지 확인하기
 router.get('/answers', TimeTravelController.getAnswers);

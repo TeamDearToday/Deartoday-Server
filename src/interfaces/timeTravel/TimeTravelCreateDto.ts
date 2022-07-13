@@ -1,4 +1,5 @@
 export interface TimeTravelCreateDto {
+  userId: string;
   title: string;
   image: string;
   year: number;
