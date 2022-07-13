@@ -20,7 +20,6 @@ const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | 
         timeTravelCount: count
     }
 
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);

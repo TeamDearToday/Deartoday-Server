@@ -3,12 +3,12 @@ import { NextFunction, Request, Response } from 'express';
 import statusCode from '../modules/statusCode';
 import message from '../modules/responseMessage';
 import util from '../modules/util';
-import config from "../config";
+import config from '../config';
 import User from '../models/User';
 
 export default (req: Request, res: Response, next: NextFunction) => {
   // request-header 에서 토큰 받아오기
-  const token = req.header('accessToken');
+  const token = req.headers['authorization']?.split(' ').reverse()[0];
 
   // 토큰 유무 검증
   if (!token) {
@@ -28,7 +28,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.NO_USER));
     }
 
-    req.body.userId = userId;
+    req.body.userId = userId.id;
     // 다음으로 넘기기
     next();
   } catch (error: any) {
@@ -37,7 +37,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
       return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.EXPIRED_TOKEN));
     } else if (error.name === 'JsonWebTokenError') {
       return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.INVALID_TOKEN));
-    } 
+    }
     res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
   }
 };

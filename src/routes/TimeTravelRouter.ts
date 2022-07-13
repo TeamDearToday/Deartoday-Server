@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import TimeTravelController from '../controllers/timeTravel/TimeTravelController';
+import auth from '../middlewares/auth';
 
 const router: Router = Router();
 
 // 메인 - 시간여행 개수
-router.get('/count', TimeTravelController.getTimeTravelCount);
+router.get('/count', auth, TimeTravelController.getTimeTravelCount);
 
 // 시간여행 가상공간 - 특정 연도 사진 가져오기
 router.get('/oldMedia', TimeTravelController.getOldMedia);
