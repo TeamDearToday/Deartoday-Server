@@ -2,6 +2,7 @@ import axios from 'axios';
 import { UserLoginDto } from '../../interfaces/user/UserLoginDto';
 import User from '../../models/User';
 import getToken from '../../modules/jwtHandler';
+import exceptionMessage from '../../modules/exceptionMessage';
 
 // 카카오랑 통신하기 -> 유저 정보 가져와
 // 토큰 발급
@@ -18,13 +19,13 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
     });
 
     kakaoUserData = kakaoUser.data;
+
+    // 카카오 계정이 있는지 체크
+    if (!kakaoUserData.id) {
+      return exceptionMessage.INVALID_USER;
+    }
   } catch (error) {
     console.log('kakao token error');
-    return 
-  }
-
-  // 카카오 계정이 있는지 체크
-  if (!kakaoUserData.id) {
     return null;
   }
 
