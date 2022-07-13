@@ -55,7 +55,20 @@ const getQuestion = async (req: Request, res: Response) => {
  *  @access Public
  */
 
-const getAnswers = async (req: Request, res: Response) => {};
+// const getAnswers = async (req: Request, res: Response) => {
+//   try {
+//     const data = await TimeTravelService.getAnswers();
+
+//     if (!data) {
+//       return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+//     }
+
+//     res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_ANSWERS_SUCCESS, data));
+//   } catch (error) {
+//     console.log(error);
+//     res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+//   }
+// };
 
 /**
  *  @route Get /:timeTravelId
@@ -63,8 +76,16 @@ const getAnswers = async (req: Request, res: Response) => {};
  *  @access Public
  */
 
-const getTimeTravelId = async (req: Request, res: Response) => {
+const getTimeTravelDetail = async (req: Request, res: Response) => {
   const { timeTravelId } = req.params;
+
+  try {
+    const data = await TimeTravelService.getTimeTravelDetail(timeTravelId);
+
+    res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_TIME_TRAVEL_DETAIL_SUCCESS));
+  } catch (error) {
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
 };
 
 /**
@@ -88,9 +109,9 @@ const TimeTravelController = {
   getOldMedia,
   getQuestion,
   postTimeTravel,
-  getAnswers,
+  // getAnswers,
   getTimeTravelList,
-  getTimeTravelId,
+  getTimeTravelDetail,
 };
 
 export default TimeTravelController;
