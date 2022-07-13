@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc && node dist"
+    "build": "tsc"
   },
   "dependencies": {
     "aws-sdk": "^2.1167.0",
