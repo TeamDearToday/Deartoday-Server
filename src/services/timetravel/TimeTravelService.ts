@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { PostBaseResponseDto } from '../../interfaces/common/PostBaseResponseDto';
+import { GetQuestionDto } from '../../interfaces/timeTravel/GetQuestionDto';
 import { TimeTravelCountDto } from '../../interfaces/timeTravel/TimeTravelCountDto';
 import TimeTravel from '../../models/TimeTravel';
 import User from '../../models/User';
@@ -12,13 +13,12 @@ const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | 
     }
 
     const count = await TimeTravel.find({
-        userId: userId
-    })
-    .count();
+      userId: userId,
+    }).count();
 
     const data = {
-        timeTravelCount: count
-    }
+      timeTravelCount: count,
+    };
 
     return data;
   } catch (error) {
@@ -27,7 +27,16 @@ const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | 
   }
 };
 
+const getQuestion = async (): Promise<GetQuestionDto | null> => {
+  try {
+    const question1 = 
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 const TimeTravelService = {
-    getTimeTravelCount,
+  getTimeTravelCount,
 };
 export default TimeTravelService;
