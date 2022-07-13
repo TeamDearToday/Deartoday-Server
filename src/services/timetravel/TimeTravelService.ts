@@ -1,8 +1,10 @@
 import mongoose from 'mongoose';
 import { PostBaseResponseDto } from '../../interfaces/common/PostBaseResponseDto';
+import { GetQuestionDto } from '../../interfaces/timeTravel/GetQuestionDto';
 import { TimeTravelCountDto } from '../../interfaces/timeTravel/TimeTravelCountDto';
 import TimeTravel from '../../models/TimeTravel';
 import User from '../../models/User';
+import getRandomQuestions from '../../modules/shuffleQuestion';
 
 const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | null> => {
   try {
@@ -12,13 +14,12 @@ const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | 
     }
 
     const count = await TimeTravel.find({
-        userId: userId
-    })
-    .count();
+      userId: userId,
+    }).count();
 
     const data = {
-        timeTravelCount: count
-    }
+      timeTravelCount: count,
+    };
 
     return data;
   } catch (error) {
@@ -27,7 +28,18 @@ const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | 
   }
 };
 
+const getQuestion = async (): Promise<GetQuestionDto | null> => {
+  try {
+    const data = getRandomQuestions();
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 const TimeTravelService = {
-    getTimeTravelCount,
+  getTimeTravelCount,
+  getQuestion,
 };
 export default TimeTravelService;
