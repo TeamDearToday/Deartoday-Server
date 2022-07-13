@@ -44,3 +44,23 @@ jobs:
         run: |
           yarn
           yarn run build
+          
+      - name: zip file
+        run: zip -r deartoday.zip ./dist ./scripts ./appspec.yml ./.env ./package.json
+
+      - name: AWS configure credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./deartoday.zip s3://deartoday/deploy/
+
+      - name: deploy with AWS codeDeploy
+        run: aws deploy create-deployment
+          --application-name deartoday-codedeploy
+          --deployment-config-name CodeDeployDefault.OneAtATime
+          --deployment-group-name GROUP
+          --s3-location bucket=deartoday,bundleType=zip,key=deploy/deartoday.zip
