@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import statusCode from '../../modules/statusCode';
 import TimeTravelService from '../../services/timetravel/TimeTravelService';
+import util from '../../modules/util';
+import message from '../../modules/responseMessage';
 
 /**
  *  @route Get /count
@@ -8,7 +10,18 @@ import TimeTravelService from '../../services/timetravel/TimeTravelService';
  *  @access Public
  */
 
-const getTimeTravelCount = async (req: Request, res: Response) => {};
+const getTimeTravelCount = async (req: Request, res: Response) => {
+  const userId = req.body.userId;
+  try {
+    const data = await TimeTravelService.getTimeTravelCount(userId);
+    if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+
+    res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_TIME_TRAVEL_COUNT_SUCCESS, data));
+  } catch (error) {
+    console.log(error);
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
+};
 
 /**
  *  @route Get /oldMedia
