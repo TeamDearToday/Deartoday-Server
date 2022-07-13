@@ -5,7 +5,6 @@ import util from '../../modules/util';
 import message from '../../modules/responseMessage';
 import { UserLoginDto } from '../../interfaces/user/UserLoginDto';
 
-
 /**
  *  @route Post /login/:social
  *  @desc social login
@@ -32,8 +31,8 @@ const socialLogin = async (req: Request, res: Response, next: NextFunction) => {
       return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.INVALID_TOKEN));
     }
     data = {
-          accessToken: data
-        };
+      accessToken: data,
+    };
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.SIGNIN_USER_SUCCESS, data));
   } catch (error) {
     console.log(error);

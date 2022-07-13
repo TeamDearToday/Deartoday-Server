@@ -1,6 +1,6 @@
 export interface UserInfo {
   socialType: string;
-  email: string;
+  socialId: string;
   accessToken: string;
   fcmTokens: string[];
 }
