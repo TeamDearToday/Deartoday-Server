@@ -9,11 +9,9 @@ import getToken from "../../modules/jwtHandler";
   // 없으면 -> 유저정보 디비에 넣어줘 create + 토큰 발급해주기
   // 토큰 리턴
 const kakaoLogin = async (userLoginDto: UserLoginDto) => {
-  const user = await axios({
-    method: 'get',
-    url: 'https://kapi.kakao.com/v2/user/me',
+  const user = await axios.get('https://kapi.kakao.com/v2/user/me', {
     headers: {
-      accessToken: `Bearer ${userLoginDto.socialToken}`,
+      Authorization: `Bearer ${userLoginDto.socialToken}`,
     },
   });
 
