@@ -25,7 +25,7 @@ const socialLogin = async (req: Request, res: Response, next: NextFunction) => {
         };
         break;
       case 'APPLE':
-        // data = AuthService.appleLogin(소셜토큰 넘겨주기, fcmToken);
+        // data = AuthService.appleLogin(userLoginDto);
         break;
       default:
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.UNDEFINED_SOCIAL_TYPE));
