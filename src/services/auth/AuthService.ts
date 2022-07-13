@@ -26,7 +26,7 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
     }
 
     const existUser = await User.findOne({
-      socialId: kakaoUserData.id as string
+      socialId: kakaoUserData.id as string,
     });
 
     // 유저가 db에 없는 경우 유저 회원 가입
@@ -63,6 +63,9 @@ const appleLogin = async (userLoginDto: UserLoginDto) => {
     if (!(user as jwt.JwtPayload).sub) {
       return exceptionMessage.INVALID_USER;
     }
+  } catch (error) {
+    console.log('apple token error');
+    return null;
   }
   // jwt decode 하면 그냥 바로 유저정보 가져올 수 있어 통신 안해도
 
@@ -73,7 +76,6 @@ const appleLogin = async (userLoginDto: UserLoginDto) => {
   // 없으면 -> 유저정보 디비에 넣어줘 create + 토큰 발급해주기
 
   // 토큰 리턴
-  return {};
 };
 
 const AuthService = {
