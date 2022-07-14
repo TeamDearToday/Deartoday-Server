@@ -6,7 +6,7 @@ import { TimeTravelCountDto } from '../../interfaces/timeTravel/TimeTravelCountD
 import TimeTravel from '../../models/TimeTravel';
 import User from '../../models/User';
 import getRandomQuestions from '../../modules/shuffleQuestion';
-import { TimeTravelDetailResponseDto } from '../../interfaces/timeTravel/TimeTravelDetailResponseDto';
+import { GetTimeTravelDetailDto } from '../../interfaces/timeTravel/GetTimeTravelDetailDto';
 
 const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | null> => {
   try {
@@ -40,30 +40,22 @@ const getQuestion = async (): Promise<GetQuestionDto | null> => {
   }
 };
 
-// const getAnswers = async (messages: string[]): Promise<GetAnswerDto | null> => {
-//   try {
-//     const answers = await TimeTravel.find({
-//       messages: messages,
-//     });
+const getAnswers = async (messages: string[]): Promise<GetAnswerDto | null> => {
+  try {
+    const answers = await TimeTravel.find({ messages: messages });
 
-//     if (!answers) {
-//       return null;
-//     }
+    const data = {
+      lastAnswers: [answers[5].messages[0].answer],
+    };
 
-//     console.log(answers);
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
-//     const data = {
-//       lastAnswers: answers[answers.length - 1],
-//     };
-
-//     return data;
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// };
-
-const getTimeTravelDetail = async (timeTravelId: string): Promise<TimeTravelDetailResponseDto | null> => {
+const getTimeTravelDetail = async (timeTravelId: string): Promise<GetTimeTravelDetailDto | null> => {
   try {
     const timeTravelDetail = await TimeTravel.findById(timeTravelId);
 
@@ -71,7 +63,7 @@ const getTimeTravelDetail = async (timeTravelId: string): Promise<TimeTravelDeta
       return null;
     }
 
-    const data: TimeTravelDetailResponseDto = {
+    const data: GetTimeTravelDetailDto = {
       title: timeTravelDetail.title,
       year: timeTravelDetail.year,
       month: timeTravelDetail.month,
@@ -91,7 +83,7 @@ const getTimeTravelDetail = async (timeTravelId: string): Promise<TimeTravelDeta
 const TimeTravelService = {
   getTimeTravelCount,
   getQuestion,
-  // getAnswers,
+  getAnswers,
   getTimeTravelDetail,
 };
 export default TimeTravelService;
