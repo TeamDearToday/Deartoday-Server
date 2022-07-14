@@ -14,7 +14,7 @@ router.get('/oldMedia', TimeTravelController.getOldMedia);
 router.get('/question', auth, TimeTravelController.getQuestion);
 
 // 시간여행 가상공간 - 질문, 대답, 과거사진, 날짜, 제목 쓰기
-router.post('/', TimeTravelController.postTimeTravel);
+router.post('/', auth, TimeTravelController.postTimeTravel);
 
 // 메세지 확인하기
 router.get('/answers', TimeTravelController.getAnswers);
@@ -23,6 +23,6 @@ router.get('/answers', TimeTravelController.getAnswers);
 router.get('/', TimeTravelController.getTimeTravelList);
 
 // 시간여행 상세내역 확안하기
-router.get('/:timeTravleId', TimeTravelController.getTimeTravelId);
+router.get('/:timeTravleId', TimeTravelController.getTimeTravelDetail);
 
 export default router;
