@@ -3,6 +3,7 @@ import { PostBaseResponseDto } from '../../interfaces/common/PostBaseResponseDto
 import { GetQuestionDto } from '../../interfaces/timeTravel/GetQuestionDto';
 import { GetTimeTravelDto } from '../../interfaces/timeTravel/GetTimeTravelAllDto';
 import { TimeTravelCountDto } from '../../interfaces/timeTravel/TimeTravelCountDto';
+import { TimeTravelInfo } from '../../interfaces/timeTravel/TimeTravelInfo';
 import TimeTravel from '../../models/TimeTravel';
 import User from '../../models/User';
 import getRandomQuestions from '../../modules/shuffleQuestion';
@@ -50,9 +51,9 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
         userId: userId
     });
 
-    const data = await Promise.all(timeTravelList.map(async (timeTravel: GetTimeTravelDto) => {
-        const result = {
-            timeTravelId: timeTravel.timeTravelId,
+    const data = await Promise.all(timeTravelList.map(async (timeTravel) => {
+        const result: GetTimeTravelDto = {
+            timeTravelId: timeTravel._id,
             title: timeTravel.title,
             year: timeTravel.year,
             month: timeTravel.month,
