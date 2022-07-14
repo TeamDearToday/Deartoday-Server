@@ -57,7 +57,7 @@ const socialLogout = async (req: Request, res: Response, next: NextFunction) => 
   try {
     const data = await AuthService.socialLogout(userLogoutDto);
     if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
-    if (data === exceptionMessage.FCMTOKEN_INVALID) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.));
+    if (data === exceptionMessage.FCMTOKEN_INVALID) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.INVALID_FCMTOKEN));
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.LOGOUT_USER_SUCCESS, data));
   } catch (error) {
     console.log(error);
