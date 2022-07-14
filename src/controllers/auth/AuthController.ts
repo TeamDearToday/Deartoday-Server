@@ -40,8 +40,18 @@ const socialLogin = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+/**
+ *  @route Post /login/:social
+ *  @desc social login
+ *  @access Public
+ */
+const socialLogout = async (req: Request, res: Response, next: NextFunction) => {
+
+};
+
 const AuthContoller = {
   socialLogin,
+  socialLogout
 };
 
 export default AuthContoller;
