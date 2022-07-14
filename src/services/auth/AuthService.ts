@@ -82,10 +82,13 @@ const appleLogin = async (userLoginDto: UserLoginDto) => {
 };
 
 const socialLogout = async (userLogoutDto: UserLogoutDto) => {
-  // try {
-  //   const user = await User.findById(userLogoutDto.userId);
-    
-  // }
+  try {
+    const user = await User.findById(userLogoutDto.userId);
+    if (!user) {
+      return null;
+    }
+
+  }
 }
 
 const AuthService = {
