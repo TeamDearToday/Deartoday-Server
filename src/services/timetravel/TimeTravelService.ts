@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { PostBaseResponseDto } from '../../interfaces/common/PostBaseResponseDto';
 import { GetQuestionDto } from '../../interfaces/timeTravel/GetQuestionDto';
+import { GetTimeTravelDto } from '../../interfaces/timeTravel/GetTimeTravelAllDto';
 import { TimeTravelCountDto } from '../../interfaces/timeTravel/TimeTravelCountDto';
 import TimeTravel from '../../models/TimeTravel';
 import User from '../../models/User';
@@ -32,6 +33,18 @@ const getQuestion = async (): Promise<GetQuestionDto | null> => {
   try {
     const data = getRandomQuestions();
     return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | null> => {
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return null;
+    }
   } catch (error) {
     console.log(error);
     throw error;
