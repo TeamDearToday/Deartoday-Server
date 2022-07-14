@@ -76,9 +76,12 @@ const getTimeTravelId = async (req: Request, res: Response) => {
 const getTimeTravelList = async (req: Request, res: Response) => {
   const userId = req.body.userId;
   try {
-    const data = await TimeTravelService.getTimeTravelList(userId);
-    if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+    const result = await TimeTravelService.getTimeTravelList(userId);
+    if (!result) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
 
+    const data = {
+      timeTravels: result
+    };
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_TIME_TRAVEL_LIST, data));
   } catch (error) {
     console.log(error);
