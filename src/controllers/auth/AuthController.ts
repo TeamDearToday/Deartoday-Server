@@ -41,9 +41,9 @@ const socialLogin = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 /**
- *  @route Post /login/:social
- *  @desc social login
- *  @access Public
+ *  @route Patch /logout
+ *  @desc social logout
+ *  @access Private
  */
 const socialLogout = async (req: Request, res: Response, next: NextFunction) => {
 

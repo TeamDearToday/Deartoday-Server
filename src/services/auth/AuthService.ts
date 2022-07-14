@@ -80,6 +80,8 @@ const appleLogin = async (userLoginDto: UserLoginDto) => {
   // 토큰 리턴
 };
 
+const socialLogout = async (userId: string, )
+
 const AuthService = {
   kakaoLogin,
   appleLogin,
