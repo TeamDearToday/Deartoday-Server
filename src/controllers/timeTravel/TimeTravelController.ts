@@ -38,8 +38,9 @@ const getOldMedia = async (req: Request, res: Response) => {};
  */
 
 const getQuestion = async (req: Request, res: Response) => {
+  const userId = req.body.userId;
   try {
-    const data = await TimeTravelService.getQuestion();
+    const data = await TimeTravelService.getQuestion(userId);
     if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
 
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_QUESTIONS_SUCCESS, data));

@@ -7,6 +7,7 @@ import TimeTravel from '../../models/TimeTravel';
 import User from '../../models/User';
 import getRandomQuestions from '../../modules/shuffleQuestion';
 import { GetTimeTravelDetailDto } from '../../interfaces/timeTravel/GetTimeTravelDetailDto';
+import { Result } from 'express-validator';
 
 const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | null> => {
   try {
@@ -40,13 +41,24 @@ const getQuestion = async (): Promise<GetQuestionDto | null> => {
   }
 };
 
-const getAnswers = async (messages: string[]): Promise<GetAnswerDto | null> => {
+const getAnswers = async (): Promise<GetAnswerDto[] | null> => {
   try {
-    const answers = await TimeTravel.find({ messages: messages });
+    const answers = await TimeTravel.find({}).populate('user');
 
-    const data = {
-      lastAnswers: [answers[5].messages[0].answer],
-    };
+    const data = await Promise.all(
+      answers.map(async (answer: any) => {
+        const result = {
+          // id: answer.id,
+          // title: answer.title,
+          // year: answer.year,
+          // month: answer.month,
+          // day: answer.day,
+          // questions: answer.questions,
+          messages: answer.messages,
+        };
+        return result;
+      }),
+    );
 
     return data;
   } catch (error) {
