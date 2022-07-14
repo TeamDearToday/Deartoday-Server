@@ -45,6 +45,10 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
     if (!user) {
       return null;
     }
+
+    const timeTravelList = await TimeTravel.find({
+        userId: userId
+    });
   } catch (error) {
     console.log(error);
     throw error;
