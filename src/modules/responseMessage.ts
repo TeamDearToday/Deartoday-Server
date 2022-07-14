@@ -23,6 +23,7 @@ const message = {
   // 타임트레블 관련
   GET_TIME_TRAVEL_COUNT_SUCCESS: '시간여행 개수 조회 성공',
   GET_QUESTIONS_SUCCESS: '질문을 들고오는데 성공했습니다.',
+  GET_TIME_TRAVEL_LIST: '시간여행 목록 불러오기 성공',
 };
 
 export default message;
