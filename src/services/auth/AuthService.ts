@@ -88,6 +88,10 @@ const socialLogout = async (userLogoutDto: UserLogoutDto) => {
       return null;
     }
 
+    const fcmToken = userLogoutDto.fcmToken;
+    if (!user.fcmTokens.includes(fcmToken)) {
+      
+    }
   }
 }
 
