@@ -76,7 +76,21 @@ const getTimeTravelId = async (req: Request, res: Response) => {
  *  @access Public
  */
 
-const getTimeTravelList = async (req: Request, res: Response) => {};
+const getTimeTravelList = async (req: Request, res: Response) => {
+  const userId = req.body.userId;
+  try {
+    const result = await TimeTravelService.getTimeTravelList(userId);
+    if (!result) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+
+    const data = {
+      timeTravels: result,
+    };
+    res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_TIME_TRAVEL_LIST_SUCCESS, data));
+  } catch (error) {
+    console.log(error);
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
+};
 
 /**
  *  @route POST /image
