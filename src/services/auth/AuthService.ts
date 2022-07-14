@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { UserLoginDto } from '../../interfaces/user/UserLoginDto';
+import { UserLogoutDto } from '../../interfaces/user/UserLogoutDto';
 import User from '../../models/User';
 import getToken from '../../modules/jwtHandler';
 import exceptionMessage from '../../modules/exceptionMessage';
@@ -80,11 +81,17 @@ const appleLogin = async (userLoginDto: UserLoginDto) => {
   // 토큰 리턴
 };
 
-const socialLogout = async (userId: string, )
+const socialLogout = async (userLogoutDto: UserLogoutDto) => {
+  // try {
+  //   const user = await User.findById(userLogoutDto.userId);
+    
+  // }
+}
 
 const AuthService = {
   kakaoLogin,
   appleLogin,
+  socialLogout,
 };
 
 export default AuthService;

@@ -82,7 +82,7 @@ const getTimeTravelList = async (req: Request, res: Response) => {
     const data = {
       timeTravels: result
     };
-    res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_TIME_TRAVEL_LIST, data));
+    res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_TIME_TRAVEL_LIST_SUCCESS, data));
   } catch (error) {
     console.log(error);
     res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
