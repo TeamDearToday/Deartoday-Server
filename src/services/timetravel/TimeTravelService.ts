@@ -75,5 +75,6 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
 const TimeTravelService = {
   getTimeTravelCount,
   getQuestion,
+  getTimeTravelList,
 };
 export default TimeTravelService;
