@@ -49,6 +49,22 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
     const timeTravelList = await TimeTravel.find({
         userId: userId
     });
+
+    const data = await Promise.all(timeTravelList.map(async (timeTravel: GetTimeTravelDto) => {
+        const result = {
+            timeTravelId: timeTravel.timeTravelId,
+            title: timeTravel.title,
+            year: timeTravel.year,
+            month: timeTravel.month,
+            day: timeTravel.day,
+            writtenDate: timeTravel.writtenDate,
+            image: timeTravel.image
+        }
+
+        return result;
+    }));
+
+    return data;
   } catch (error) {
     console.log(error);
     throw error;
