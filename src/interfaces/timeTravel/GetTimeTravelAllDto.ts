@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export interface GetTimeTravelDto {
-  timeTravelId: mongoose.Types.ObjectId;
+  timeTravelId: string;
   title: string;
   year: number;
   month: number;
