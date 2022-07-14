@@ -16,7 +16,7 @@ const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | 
     }
 
     const count = await TimeTravel.find({
-      userId: userId,
+      user: userId,
     }).count();
 
     const data = {
@@ -48,22 +48,24 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
     }
 
     const timeTravelList = await TimeTravel.find({
-        userId: userId
+      user: userId,
     });
 
-    const data = await Promise.all(timeTravelList.map(async (timeTravel) => {
+    const data = await Promise.all(
+      timeTravelList.map(async (timeTravel) => {
         const result: GetTimeTravelDto = {
-            timeTravelId: timeTravel._id,
-            title: timeTravel.title,
-            year: timeTravel.year,
-            month: timeTravel.month,
-            day: timeTravel.day,
-            writtenDate: timeTravel.writtenDate,
-            image: timeTravel.image
-        }
+          timeTravelId: timeTravel._id,
+          title: timeTravel.title,
+          year: timeTravel.year,
+          month: timeTravel.month,
+          day: timeTravel.day,
+          writtenDate: timeTravel.writtenDate,
+          image: timeTravel.image,
+        };
 
         return result;
-    }));
+      }),
+    );
 
     return data;
   } catch (error) {
