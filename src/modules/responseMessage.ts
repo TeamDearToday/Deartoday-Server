@@ -20,6 +20,7 @@ const message = {
   NO_TOKEN: '토큰 값이 요청되지 않았습니다.',
   INVALID_TOKEN: '유효하지 않은 토큰입니다.',
   EXPIRED_TOKEN: '만료된 토큰입니다.',
+  INVALID_FCMTOKEN: '유효하지 않은 FCM토큰입니다.',
 
   // 타임트레블 관련
   GET_TIME_TRAVEL_COUNT_SUCCESS: '시간여행 개수 조회 성공',
