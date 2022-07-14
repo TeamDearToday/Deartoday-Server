@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { TimeTravelResponseDto } from '../../interfaces/timeTravel/TimeTravelResponseDto';
 import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
 import { PostBaseResponseDto } from '../../interfaces/common/PostBaseResponseDto';
 import { GetQuestionDto } from '../../interfaces/timeTravel/GetQuestionDto';
@@ -8,40 +7,16 @@ import TimeTravel from '../../models/TimeTravel';
 import User from '../../models/User';
 import getRandomQuestions from '../../modules/shuffleQuestion';
 
-const postTimeTravel = async (timeTravelCreateDto: TimeTravelCreateDto): Promise<TimeTravelCreateDto> => {
+const postTimeTravel = async (timeTravelCreateDto: TimeTravelCreateDto) => {
   try {
-    const timeTravel = new TimeTravel({
-      userId: timeTravelCreateDto.userId,
-      title: timeTravelCreateDto.title,
-      image: timeTravelCreateDto.image,
-      year: timeTravelCreateDto.year,
-      month: timeTravelCreateDto.month,
-      day: timeTravelCreateDto.day,
-      writtenDate: timeTravelCreateDto.currentDate,
-      messages: timeTravelCreateDto.answers,
-    });
-
+    const timeTravel = new TimeTravel(timeTravelCreateDto);
     await timeTravel.save();
-
-    const data = {
-      userId: timeTravelCreateDto.userId,
-      title: timeTravelCreateDto.title,
-      image: timeTravelCreateDto.image,
-      year: timeTravelCreateDto.year,
-      month: timeTravelCreateDto.month,
-      day: timeTravelCreateDto.day,
-      currentDate: timeTravelCreateDto.currentDate,
-      questions: timeTravelCreateDto.questions,
-      answers: timeTravelCreateDto.answers,
-    };
-
-    return data;
+    return timeTravel;
   } catch (error) {
     console.log(error);
     throw error;
   }
 };
-
 
 const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | null> => {
   try {

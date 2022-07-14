@@ -4,6 +4,7 @@ import util from '../../modules/util';
 import message from '../../modules/responseMessage';
 import TimeTravelService from '../../services/timetravel/TimeTravelService';
 import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
+import TimeTravel from '../../models/TimeTravel';
 
 /**
  *  @route Get /count
@@ -13,6 +14,7 @@ import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreat
 
 const getTimeTravelCount = async (req: Request, res: Response) => {
   const userId = req.body.userId;
+
   try {
     const data = await TimeTravelService.getTimeTravelCount(userId);
     if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
@@ -77,7 +79,7 @@ const getTimeTravelId = async (req: Request, res: Response) => {
 const getTimeTravelList = async (req: Request, res: Response) => {};
 
 /**
- *  @route POST /
+ *  @route POST /image
  *  @desc Post TimeTravel
  *  @access Public
  */
@@ -88,7 +90,6 @@ const postTimeTravel = async (req: Request, res: Response) => {
   }
 
   const imageFile: Express.MulterS3.File = req.file as Express.MulterS3.File;
-  const { originalname, location } = imageFile;
 
   const timeTravelCreateDto: TimeTravelCreateDto = {
     userId: req.body.userId,
@@ -97,16 +98,16 @@ const postTimeTravel = async (req: Request, res: Response) => {
     year: req.body.year,
     month: req.body.month,
     day: req.body.day,
-    currentDate: req.body.currentDate,
+    writtenDate: req.body.writtenDate,
     questions: req.body.questions,
     answers: req.body.answers,
   };
 
   try {
-    // const data = await TimeTravelService.postTimeTravel(location, originalname);
-    const data = await TimeTravelService.postTimeTravel(timeTravelCreateDto);
-
-    res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, message.CREATE_TIMETRAVEL, data));
+    console.log(timeTravelCreateDto);
+    const timeTravel = new TimeTravel(timeTravelCreateDto);
+    await timeTravel.save();
+    res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, message.CREATE_TIMETRAVEL));
   } catch (error) {
     console.log(error);
     res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));

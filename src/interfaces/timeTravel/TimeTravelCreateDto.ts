@@ -1,3 +1,5 @@
+import { MessageInfo } from '../../interfaces/message/MessageInfo';
+
 export interface TimeTravelCreateDto {
   userId: string;
   title: string;
@@ -5,7 +7,7 @@ export interface TimeTravelCreateDto {
   year: number;
   month: number;
   day: number;
-  currentDate: string;
+  writtenDate: string;
   questions: string[];
   answers: string[];
 }
