@@ -1,17 +1,18 @@
 import { Router } from 'express';
 import upload from '../config/multerConfig';
 import TimeTravelController from '../controllers/timeTravel/TimeTravelController';
+import auth from '../middlewares/auth';
 
 const router: Router = Router();
 
 // 메인 - 시간여행 개수
-router.get('/count', TimeTravelController.getTimeTravelCount);
+router.get('/count', auth, TimeTravelController.getTimeTravelCount);
 
 // 시간여행 가상공간 - 특정 연도 사진 가져오기
 router.get('/oldMedia', TimeTravelController.getOldMedia);
 
 // 시간여행 가상공간 - 질문 가져오기
-router.get('/question', TimeTravelController.getQuestion);
+router.get('/question', auth, TimeTravelController.getQuestion);
 
 // 시간여행 가상공간 - 질문, 대답, 과거사진, 날짜, 제목 쓰기
 router.post('/', upload.single('file'), TimeTravelController.postTimeTravel);

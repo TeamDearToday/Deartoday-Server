@@ -1,28 +1,43 @@
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
+import statusCode from '../modules/statusCode';
+import message from '../modules/responseMessage';
+import util from '../modules/util';
+import config from '../config';
+import User from '../models/User';
 
-const isAuth = async (req: Request, res: Response, next: NextFunction) => {
-  const { accessToken } = req.headers;
-  if (!accessToken) {
-    // return 토큰이 비어잇습니다.;
+export default (req: Request, res: Response, next: NextFunction) => {
+  // request-header 에서 토큰 받아오기
+  const token = req.headers['authorization']?.split(' ').reverse()[0];
+
+  // 토큰 유무 검증
+  if (!token) {
+    return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.NULL_VALUE_TOKEN));
   }
 
+  // 토큰 검증
   try {
-    // 액세스 토큰 해독 verify
-    // 에러처리
-    // userId = decodedToken.id
-    // const user = User.findOne(userId)
-    // if(!user) 유저없음~
-    // req.user = user;
-    // next();
-  } catch (error) {}
+    // jwt token 해독
+    const decoded = jwt.verify(token, config.jwtSecret);
+    // payload 꺼내오기
+    const userId = (decoded as JwtPayload).user;
+    const user = User.findById(userId);
+
+    // no user
+    if (!user) {
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.NO_USER));
+    }
+
+    req.body.userId = userId.id;
+    // 다음으로 넘기기
+    next();
+  } catch (error: any) {
+    console.log(error);
+    if (error.name === 'TokenExpiredError') {
+      return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.EXPIRED_TOKEN));
+    } else if (error.name === 'JsonWebTokenError') {
+      return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.INVALID_TOKEN));
+    }
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
 };
-
-const authUtil = {
-  isAuth,
-};
-
-export default authUtil;
-
-// route.use(authUtil.isAuth);
-/// 이 아래로 저 미들웨어 다 적용
