@@ -101,7 +101,7 @@ const socialLogout = async (userLogoutDto: UserLogoutDto) => {
     }
 
     await user.update();
-    return user;
+    return { user };
   } catch (error) {
     console.log(error);
     throw error;

@@ -46,7 +46,12 @@ const socialLogin = async (req: Request, res: Response, next: NextFunction) => {
  *  @access Private
  */
 const socialLogout = async (req: Request, res: Response, next: NextFunction) => {
+  try {
 
+  } catch (error) {
+    console.log(error);
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send;
+  }
 };
 
 const AuthContoller = {
