@@ -55,20 +55,21 @@ const getQuestion = async (req: Request, res: Response) => {
  *  @access Public
  */
 
-// const getAnswers = async (req: Request, res: Response) => {
-//   try {
-//     const data = await TimeTravelService.getAnswers();
+const getAnswers = async (req: Request, res: Response) => {
+  try {
+    const lastAnswers = req.body.message;
+    const data = await TimeTravelService.getAnswers(lastAnswers);
 
-//     if (!data) {
-//       return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
-//     }
+    if (!data) {
+      return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+    }
 
-//     res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_ANSWERS_SUCCESS, data));
-//   } catch (error) {
-//     console.log(error);
-//     res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
-//   }
-// };
+    res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_ANSWERS_SUCCESS, data));
+  } catch (error) {
+    console.log(error);
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
+};
 
 /**
  *  @route Get /:timeTravelId
@@ -109,7 +110,7 @@ const TimeTravelController = {
   getOldMedia,
   getQuestion,
   postTimeTravel,
-  // getAnswers,
+  getAnswers,
   getTimeTravelList,
   getTimeTravelDetail,
 };
