@@ -14,6 +14,7 @@ const message = {
 
   // 로그인 관련
   UNDEFINED_SOCIAL_TYPE: '소셜 타입이 잘못되었습니다.',
+  LOGOUT_USER_SUCCESS: '로그아웃 성공',
 
   // 토큰 관련
   NO_TOKEN: '토큰 값이 요청되지 않았습니다.',
