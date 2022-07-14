@@ -93,7 +93,15 @@ const socialLogout = async (userLogoutDto: UserLogoutDto) => {
       return exceptionMessage.FCMTOKEN_INVALID;
     }
 
-    
+    for(let i = 0; i < user.fcmTokens.length; i++) {
+      if(user.fcmTokens[i] === fcmToken)  {
+        user.fcmTokens.splice(i, 1);
+        i--;
+      }
+    }
+
+    await user.update();
+    return user;
   }
 }
 
