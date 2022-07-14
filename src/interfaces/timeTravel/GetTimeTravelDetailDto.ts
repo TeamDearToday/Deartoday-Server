@@ -1,6 +1,6 @@
 import { MessageInfo } from '../message/MessageInfo';
 
-export interface TimeTravelDetailResponseDto {
+export interface GetTimeTravelDetailDto {
   title: string;
   year: number;
   month: number;
