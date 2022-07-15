@@ -93,7 +93,7 @@ const getTimeTravelList = async (req: Request, res: Response) => {
 };
 
 /**
- *  @route POST /image
+ *  @route POST /
  *  @desc Post TimeTravel
  *  @access Public
  */
