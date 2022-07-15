@@ -39,7 +39,15 @@ const getOldMedia = async (year: number): Promise<OldMediaResponseDto | null> =>
         });
         console.log(oldMedias);
 
-        return oldMedias;
+        const images = await Promise.all (
+            oldMedias.map( async (oldMedia) => {
+                return oldMedia.image;
+            })
+        );
+
+        const data = { images };
+
+        return data;
     } catch (error) {
         console.log(error);
         throw error;
