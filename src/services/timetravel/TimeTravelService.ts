@@ -30,6 +30,10 @@ const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | 
   }
 };
 
+const getOldMedia = async (userId: string): Promise<OldMediaResponseDto | null> => {
+
+};
+
 const getQuestion = async (): Promise<GetQuestionDto | null> => {
   try {
     const data = getRandomQuestions();
@@ -76,6 +80,7 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
 
 const TimeTravelService = {
   getTimeTravelCount,
+  getOldMedia,
   getQuestion,
   getTimeTravelList,
 };
