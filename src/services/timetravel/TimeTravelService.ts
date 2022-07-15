@@ -38,7 +38,11 @@ const getOldMedia = async (year: number): Promise<OldMediaResponseDto | null> =>
             year: year
         });
         console.log(oldMedias);
-        
+
+        return oldMedias;
+    } catch (error) {
+        console.log(error);
+        throw error;
     }
 };
 
