@@ -37,7 +37,6 @@ const getOldMedia = async (year: number): Promise<OldMediaResponseDto | null> =>
         const oldMedias = await OldMedia.find({
             year: year
         });
-        console.log(oldMedias);
 
         const images = await Promise.all (
             oldMedias.map( async (oldMedia) => {
