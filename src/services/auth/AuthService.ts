@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { UserLoginDto } from '../../interfaces/user/UserLoginDto';
+import { UserLogoutDto } from '../../interfaces/user/UserLogoutDto';
 import User from '../../models/User';
 import getToken from '../../modules/jwtHandler';
 import exceptionMessage from '../../modules/exceptionMessage';
@@ -80,9 +81,38 @@ const appleLogin = async (userLoginDto: UserLoginDto) => {
   // 토큰 리턴
 };
 
+const socialLogout = async (userLogoutDto: UserLogoutDto) => {
+  try {
+    const user = await User.findById(userLogoutDto.userId);
+    if (!user) {
+      return null;
+    }
+
+    const fcmToken = userLogoutDto.fcmToken;
+    console.log(user);
+    if (!user.fcmTokens.includes(fcmToken)) {
+      return exceptionMessage.FCMTOKEN_INVALID;
+    }
+
+    for(let i = 0; i < user.fcmTokens.length; i++) {
+      if(user.fcmTokens[i] === fcmToken)  {
+        user.fcmTokens.splice(i, 1);
+        i--;
+      }
+    }
+    const fcmTokens = user.fcmTokens;
+    await user.updateOne({fcmTokens});
+    return { user };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 const AuthService = {
   kakaoLogin,
   appleLogin,
+  socialLogout,
 };
 
 export default AuthService;
