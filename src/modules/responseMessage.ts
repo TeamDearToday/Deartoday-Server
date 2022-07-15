@@ -14,11 +14,13 @@ const message = {
 
   // 로그인 관련
   UNDEFINED_SOCIAL_TYPE: '소셜 타입이 잘못되었습니다.',
+  LOGOUT_USER_SUCCESS: '로그아웃 성공',
 
   // 토큰 관련
   NO_TOKEN: '토큰 값이 요청되지 않았습니다.',
   INVALID_TOKEN: '유효하지 않은 토큰입니다.',
   EXPIRED_TOKEN: '만료된 토큰입니다.',
+  INVALID_FCMTOKEN: '유효하지 않은 FCM토큰입니다.',
 
   // 타임트레블 관련
   GET_TIME_TRAVEL_COUNT_SUCCESS: '시간여행 개수 조회 성공',
