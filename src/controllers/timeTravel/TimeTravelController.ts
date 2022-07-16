@@ -5,6 +5,7 @@ import message from '../../modules/responseMessage';
 import TimeTravelService from '../../services/timetravel/TimeTravelService';
 import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
 import TimeTravel from '../../models/TimeTravel';
+import { GetTimeTravelDetailDto } from '../../interfaces/timeTravel/GetTimeTravelDetailDto';
 
 /**
  *  @route Get /count
@@ -41,9 +42,8 @@ const getOldMedia = async (req: Request, res: Response) => {};
  */
 
 const getQuestion = async (req: Request, res: Response) => {
-  const userId = req.body.userId;
   try {
-    const data = await TimeTravelService.getQuestion(userId);
+    const data = await TimeTravelService.getQuestion();
     if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
 
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_QUESTIONS_SUCCESS, data));
@@ -59,7 +59,22 @@ const getQuestion = async (req: Request, res: Response) => {
  *  @access Public
  */
 
-const getAnswers = async (req: Request, res: Response) => {};
+const getAnswers = async (req: Request, res: Response) => {
+  const userId = req.body.userId;
+  try {
+    const result = await TimeTravelService.getAnswers(userId);
+    if (!result) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+    console.log(result);
+
+    const data = {
+      lastAnswers: result,
+    };
+    res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_ANSWERS_SUCCESS, result));
+  } catch (error) {
+    console.log(error);
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
+};
 
 /**
  *  @route Get /:timeTravelId
@@ -68,12 +83,12 @@ const getAnswers = async (req: Request, res: Response) => {};
  */
 
 const getTimeTravelDetail = async (req: Request, res: Response) => {
-  const { timeTravelId } = req.params;
+  const timeTravelId = req.params.timeTravelId;
 
   try {
     const data = await TimeTravelService.getTimeTravelDetail(timeTravelId);
-
-    res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_TIME_TRAVEL_DETAIL_SUCCESS));
+    if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+    res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_TIME_TRAVEL_DETAIL_SUCCESS, data));
   } catch (error) {
     res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
   }

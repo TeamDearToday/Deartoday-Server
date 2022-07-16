@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
 import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
-import { PostBaseResponseDto } from '../../interfaces/common/PostBaseResponseDto';
 import { GetQuestionDto } from '../../interfaces/timeTravel/GetQuestionDto';
-import { GetAnswerDto } from '../../interfaces/timeTravel/GetAnswerDto';
 import { GetTimeTravelDto } from '../../interfaces/timeTravel/GetTimeTravelAllDto';
 import { TimeTravelCountDto } from '../../interfaces/timeTravel/TimeTravelCountDto';
 import TimeTravel from '../../models/TimeTravel';
@@ -10,6 +8,7 @@ import User from '../../models/User';
 import getRandomQuestions from '../../modules/shuffleQuestion';
 import { GetTimeTravelDetailDto } from '../../interfaces/timeTravel/GetTimeTravelDetailDto';
 import { Result } from 'express-validator';
+import { GetAnswersDto } from '../../interfaces/timeTravel/GetAnswersDto';
 
 const postTimeTravel = async (timeTravelCreateDto: TimeTravelCreateDto) => {
   try {
@@ -47,6 +46,32 @@ const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | 
 const getQuestion = async (): Promise<GetQuestionDto | null> => {
   try {
     const data = getRandomQuestions();
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+const getAnswers = async (userId: string): Promise<GetAnswersDto[] | null> => {
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return null;
+    }
+    const answers = await TimeTravel.find(
+      answers: answer
+    );
+
+    console.log(answers);
+
+    const data: GetAnswersDto[] = {
+      lastAnswer: answers,
+    };
+
+    console.log(answers, data);
+
     return data;
   } catch (error) {
     console.log(error);
@@ -116,7 +141,7 @@ const getTimeTravelDetail = async (timeTravelId: string): Promise<GetTimeTravelD
 const TimeTravelService = {
   getTimeTravelCount,
   getQuestion,
-  // getAnswers,
+  getAnswers,
   getTimeTravelDetail,
   postTimeTravel,
   getTimeTravelList,
