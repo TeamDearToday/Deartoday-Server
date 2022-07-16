@@ -1,10 +1,12 @@
 import mongoose from 'mongoose';
 import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
 import { PostBaseResponseDto } from '../../interfaces/common/PostBaseResponseDto';
+import { OldMediaResponseDto } from '../../interfaces/oldMedia/OldMediaResponseDto';
 import { GetQuestionDto } from '../../interfaces/timeTravel/GetQuestionDto';
 import { GetTimeTravelDto } from '../../interfaces/timeTravel/GetTimeTravelAllDto';
 import { TimeTravelCountDto } from '../../interfaces/timeTravel/TimeTravelCountDto';
 import { TimeTravelInfo } from '../../interfaces/timeTravel/TimeTravelInfo';
+import OldMedia from '../../models/OldMedia';
 import TimeTravel from '../../models/TimeTravel';
 import User from '../../models/User';
 import getRandomQuestions from '../../modules/shuffleQuestion';
@@ -40,6 +42,27 @@ const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | 
     console.log(error);
     throw error;
   }
+};
+
+const getOldMedia = async (year: number): Promise<OldMediaResponseDto | null> => {
+    try {
+        const oldMedias = await OldMedia.find({
+            year: year
+        });
+
+        const images = await Promise.all (
+            oldMedias.map( async (oldMedia) => {
+                return oldMedia.image;
+            })
+        );
+
+        const data = { images };
+
+        return data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
 };
 
 const getQuestion = async (): Promise<GetQuestionDto | null> => {
@@ -88,6 +111,7 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
 
 const TimeTravelService = {
   getTimeTravelCount,
+  getOldMedia,
   getQuestion,
   postTimeTravel,
   getTimeTravelList,
