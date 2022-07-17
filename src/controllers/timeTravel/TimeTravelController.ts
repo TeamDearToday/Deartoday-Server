@@ -147,7 +147,6 @@ const postTimeTravel = async (req: Request, res: Response) => {
   try {
     const data = await TimeTravelService.postTimeTravel(timeTravelCreateDto);
     if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
-
     res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, message.CREATE_TIMETRAVEL));
   } catch (error) {
     console.log(error);

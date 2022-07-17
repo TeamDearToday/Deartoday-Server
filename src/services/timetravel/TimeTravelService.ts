@@ -97,14 +97,12 @@ const getAnswers = async (userId: string): Promise<string[] | null> => {
     const data = await Promise.all(
       timeTravels.map(async (timeTravel) => {
         const result: GetAnswersDto = {
-          lastAnswer: timeTravel.messages[0].answer,
+          lastAnswer: timeTravel.messages[timeTravel.messages.length - 1].answer,
         };
 
         return result.lastAnswer;
       }),
     );
-
-    console.log(data, '데이터');
 
     return data;
   } catch (error) {
