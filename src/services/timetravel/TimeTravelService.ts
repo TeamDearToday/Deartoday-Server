@@ -18,15 +18,6 @@ const postTimeTravel = async (timeTravelCreateDto: TimeTravelCreateDto): Promise
     const timeTravelQuestions = timeTravelCreateDto.questions;
     const timeTravelAnswers = timeTravelCreateDto.answers;
 
-    // /**
-    //  * TODO
-    //  * 메시지 저장 promise로 하는 방법 생각해보기
-    //  * Post 할 때 배열로 넣는 방법 찾아내서 배열로 넣기
-    //  * timeTravelCreateDto 말고 timeTravelInfo로 저장하기 +
-    //  * TimeTravel에 저장하기 전에 timeTravelInfo에 우리가 저장한 메시지들을 timeTravelInfo 요소로 넣기 +
-    //  * timeTravel 저장 +
-    //  */
-
     let messageList: MessageInfo[] = [];
 
     for (let i = 0; i < timeTravelQuestions.length; i++) {
@@ -38,24 +29,6 @@ const postTimeTravel = async (timeTravelCreateDto: TimeTravelCreateDto): Promise
       await message.save();
       messageList.push(message._id);
     }
-
-    // const data = await Promise.all(
-    //   messageList.map(async (message) => {
-    //     const dataList = new Message({
-    //       question: message.question,
-    //       answer: message.answer,
-    //     });
-
-    //     await dataList.save();
-
-    //     // objectid
-    //     const messageInfo = {
-    //       _id: dataList._id,
-    //     };
-    //   }),
-    // );
-
-    // console.log(data, '데이터소연?');
 
     const timeTravel = new TimeTravel({
       userId: timeTravelCreateDto.userId,
@@ -109,7 +82,7 @@ const getQuestion = async (): Promise<GetQuestionDto | null> => {
   }
 };
 
-const getAnswers = async (userId: string): Promise<GetAnswersDto[] | null> => {
+const getAnswers = async (userId: string): Promise<string[] | null> => {
   try {
     const user = await User.findById(userId);
 
@@ -124,12 +97,14 @@ const getAnswers = async (userId: string): Promise<GetAnswersDto[] | null> => {
     const data = await Promise.all(
       timeTravels.map(async (timeTravel) => {
         const result: GetAnswersDto = {
-          lastAnswer: timeTravel.messages[6].answer,
+          lastAnswer: timeTravel.messages[0].answer,
         };
 
         return result.lastAnswer;
       }),
     );
+
+    console.log(data, '데이터');
 
     return data;
   } catch (error) {
