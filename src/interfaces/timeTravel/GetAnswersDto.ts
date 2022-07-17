@@ -1,3 +1,3 @@
 export interface GetAnswersDto {
-  lastAnswer: string[];
+  lastAnswer: string;
 }
