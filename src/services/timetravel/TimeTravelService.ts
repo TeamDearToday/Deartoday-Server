@@ -1,16 +1,16 @@
 import mongoose from 'mongoose';
 import { TimeTravelInfo } from '../../interfaces/timeTravel/TimeTravelInfo';
+import { TimeTravelCountDto } from '../../interfaces/timeTravel/TimeTravelCountDto';
+import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
+import { GetAnswersDto } from '../../interfaces/timeTravel/GetAnswersDto';
 import { GetQuestionDto } from '../../interfaces/timeTravel/GetQuestionDto';
 import { GetTimeTravelDto } from '../../interfaces/timeTravel/GetTimeTravelAllDto';
-import { TimeTravelCountDto } from '../../interfaces/timeTravel/TimeTravelCountDto';
+import { GetTimeTravelDetailDto } from '../../interfaces/timeTravel/GetTimeTravelDetailDto';
+import { MessageInfo } from '../../interfaces/message/MessageInfo';
 import TimeTravel from '../../models/TimeTravel';
 import User from '../../models/User';
 import getRandomQuestions from '../../modules/shuffleQuestion';
-import { GetTimeTravelDetailDto } from '../../interfaces/timeTravel/GetTimeTravelDetailDto';
 import { Result } from 'express-validator';
-import { GetAnswersDto } from '../../interfaces/timeTravel/GetAnswersDto';
-import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
-import { MessageInfo } from '../../interfaces/message/MessageInfo';
 import Message from '../../models/Message';
 
 const postTimeTravel = async (timeTravelCreateDto: TimeTravelCreateDto): Promise<TimeTravelInfo> => {
