@@ -219,4 +219,4 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,yarn,node
 
 # firebase
-firebase-key.json
+firebase-adminsdk.json
