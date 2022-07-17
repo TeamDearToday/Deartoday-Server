@@ -64,10 +64,13 @@ const getAnswers = async (req: Request, res: Response) => {
   try {
     const result = await TimeTravelService.getAnswers(userId);
     if (!result) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
-    console.log(result);
 
     const data = {
       lastAnswers: result,
+    };
+
+    const real = {
+      lastAnswers: data.lastAnswers,
     };
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_ANSWERS_SUCCESS, result));
   } catch (error) {
@@ -142,9 +145,8 @@ const postTimeTravel = async (req: Request, res: Response) => {
   };
 
   try {
-    console.log(timeTravelCreateDto);
-    const timeTravel = new TimeTravel(timeTravelCreateDto);
-    await timeTravel.save();
+    const data = await TimeTravelService.postTimeTravel(timeTravelCreateDto);
+    if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
     res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, message.CREATE_TIMETRAVEL));
   } catch (error) {
     console.log(error);
