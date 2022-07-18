@@ -65,13 +65,6 @@ const getAnswers = async (req: Request, res: Response) => {
     const result = await TimeTravelService.getAnswers(userId);
     if (!result) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
 
-    const data = {
-      lastAnswers: result,
-    };
-
-    const real = {
-      lastAnswers: data.lastAnswers,
-    };
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_ANSWERS_SUCCESS, result));
   } catch (error) {
     console.log(error);

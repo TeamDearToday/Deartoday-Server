@@ -42,7 +42,6 @@ const postTimeTravel = async (timeTravelCreateDto: TimeTravelCreateDto): Promise
     });
     await timeTravel.save();
 
-    console.log(timeTravel);
     return timeTravel;
   } catch (error) {
     console.log(error);
