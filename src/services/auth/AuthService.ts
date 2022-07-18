@@ -35,7 +35,7 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
       const user = new User({
         socialType: 'KAKAO',
         socialId: kakaoUserData.id as string,
-        fcmTokens: [],
+        fcmTokens: [userLoginDto.fcmToken],
       });
 
       const jwtToken = getToken(user.id);
