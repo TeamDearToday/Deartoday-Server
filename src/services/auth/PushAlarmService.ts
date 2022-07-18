@@ -17,3 +17,16 @@ const firebaseKeys = {
 admin.initializeApp({
   credential: admin.credential.cert(firebaseKeys),
 });
+
+export const pushAlarm = async (fcmToken: string) => {
+    try {
+        const message = {
+            data: {
+                title: "김루희 똥방구",
+                body: "어쩔티비 저쩔티미 우짤레미 저짤레미 눼눼눼눼 아무말도 못하쥬?",
+                style: "테스트",
+            },
+            token: fcmToken,
+        }
+    }
+}
