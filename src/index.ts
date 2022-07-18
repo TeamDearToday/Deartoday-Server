@@ -6,7 +6,7 @@ import routes from './routes';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
+import serviceAccount = require('../firebase-adminsdk.json');
 connectDB();
 
 app.use(express.urlencoded({ extended: true }));
