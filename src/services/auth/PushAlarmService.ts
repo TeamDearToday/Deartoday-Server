@@ -28,5 +28,8 @@ export const pushAlarm = async (fcmToken: string) => {
             },
             token: fcmToken,
         }
+    } catch (error) {
+        console.log(error);
+        throw error;
     }
 }
