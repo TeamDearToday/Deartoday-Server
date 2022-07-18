@@ -31,6 +31,7 @@ const message = {
   GET_ANSWERS_SUCCESS: '메세지 목록 조회 성공했습니다.',
   GET_TIME_TRAVEL_DETAIL_SUCCESS: '시간여행 상세조회를 성공했습니다.',
   GET_TIME_TRAVEL_LIST_SUCCESS: '시간여행 목록 불러오기 성공',
+  GET_OLDMEDIA_SUCCESS: '과거에 유행했던 미디어 들고오기 성공.',
 };
 
 export default message;

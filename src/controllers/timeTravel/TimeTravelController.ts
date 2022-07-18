@@ -4,8 +4,6 @@ import util from '../../modules/util';
 import message from '../../modules/responseMessage';
 import TimeTravelService from '../../services/timetravel/TimeTravelService';
 import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
-import TimeTravel from '../../models/TimeTravel';
-import { GetTimeTravelDetailDto } from '../../interfaces/timeTravel/GetTimeTravelDetailDto';
 
 /**
  *  @route Get /count
@@ -33,7 +31,18 @@ const getTimeTravelCount = async (req: Request, res: Response) => {
  *  @access Public
  */
 
-const getOldMedia = async (req: Request, res: Response) => {};
+const getOldMedia = async (req: Request, res: Response) => {
+  const year = req.query.year as string;
+  try {
+    const data = await TimeTravelService.getOldMedia(parseInt(year));
+    if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+
+    res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_OLDMEDIA_SUCCESS, data));
+  } catch (error) {
+    console.log(error);
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
+};
 
 /**
  *  @route Get /question

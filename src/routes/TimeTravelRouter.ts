@@ -9,7 +9,7 @@ const router: Router = Router();
 router.get('/count', auth, TimeTravelController.getTimeTravelCount);
 
 // 시간여행 가상공간 - 특정 연도 사진 가져오기
-router.get('/oldMedia', TimeTravelController.getOldMedia);
+router.get('/oldMedia', auth, TimeTravelController.getOldMedia);
 
 // 시간여행 가상공간 - 질문 가져오기
 router.get('/question', auth, TimeTravelController.getQuestion);

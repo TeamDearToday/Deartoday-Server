@@ -7,6 +7,8 @@ import { GetQuestionDto } from '../../interfaces/timeTravel/GetQuestionDto';
 import { GetTimeTravelDto } from '../../interfaces/timeTravel/GetTimeTravelAllDto';
 import { GetTimeTravelDetailDto } from '../../interfaces/timeTravel/GetTimeTravelDetailDto';
 import { MessageInfo } from '../../interfaces/message/MessageInfo';
+import { OldMediaResponseDto } from '../../interfaces/oldMedia/OldMediaResponseDto';
+import OldMedia from '../../models/OldMedia';
 import TimeTravel from '../../models/TimeTravel';
 import User from '../../models/User';
 import getRandomQuestions from '../../modules/shuffleQuestion';
@@ -63,6 +65,27 @@ const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | 
     const data = {
       timeTravelCount: count,
     };
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+const getOldMedia = async (year: number): Promise<OldMediaResponseDto | null> => {
+  try {
+    const oldMedias = await OldMedia.find({
+      year: year,
+    });
+
+    const images = await Promise.all(
+      oldMedias.map(async (oldMedia) => {
+        return oldMedia.image;
+      }),
+    );
+
+    const data = { images };
 
     return data;
   } catch (error) {
@@ -171,6 +194,7 @@ const getTimeTravelDetail = async (timeTravelId: string): Promise<GetTimeTravelD
 
 const TimeTravelService = {
   getTimeTravelCount,
+  getOldMedia,
   getQuestion,
   getAnswers,
   getTimeTravelDetail,
