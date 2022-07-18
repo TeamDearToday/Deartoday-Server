@@ -4,7 +4,6 @@ import util from '../../modules/util';
 import message from '../../modules/responseMessage';
 import TimeTravelService from '../../services/timetravel/TimeTravelService';
 import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
-import TimeTravel from '../../models/TimeTravel';
 
 /**
  *  @route Get /count
@@ -69,7 +68,18 @@ const getQuestion = async (req: Request, res: Response) => {
  *  @access Public
  */
 
-const getAnswers = async (req: Request, res: Response) => {};
+const getAnswers = async (req: Request, res: Response) => {
+  const userId = req.body.userId;
+  try {
+    const result = await TimeTravelService.getAnswers(userId);
+    if (!result) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+
+    res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_ANSWERS_SUCCESS, result));
+  } catch (error) {
+    console.log(error);
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
+};
 
 /**
  *  @route Get /:timeTravelId
@@ -77,8 +87,16 @@ const getAnswers = async (req: Request, res: Response) => {};
  *  @access Public
  */
 
-const getTimeTravelId = async (req: Request, res: Response) => {
-  const { timeTravelId } = req.params;
+const getTimeTravelDetail = async (req: Request, res: Response) => {
+  const timeTravelId = req.params.timeTravelId;
+
+  try {
+    const data = await TimeTravelService.getTimeTravelDetail(timeTravelId);
+    if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+    res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_TIME_TRAVEL_DETAIL_SUCCESS, data));
+  } catch (error) {
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
 };
 
 /**
@@ -129,9 +147,8 @@ const postTimeTravel = async (req: Request, res: Response) => {
   };
 
   try {
-    console.log(timeTravelCreateDto);
-    const timeTravel = new TimeTravel(timeTravelCreateDto);
-    await timeTravel.save();
+    const data = await TimeTravelService.postTimeTravel(timeTravelCreateDto);
+    if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
     res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, message.CREATE_TIMETRAVEL));
   } catch (error) {
     console.log(error);
@@ -146,7 +163,7 @@ const TimeTravelController = {
   postTimeTravel,
   getAnswers,
   getTimeTravelList,
-  getTimeTravelId,
+  getTimeTravelDetail,
 };
 
 export default TimeTravelController;
