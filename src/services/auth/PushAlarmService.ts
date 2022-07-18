@@ -18,7 +18,7 @@ admin.initializeApp({
   credential: admin.credential.cert(firebaseKeys),
 });
 
-export const pushAlarm = async (fcmToken: string) => {
+export const pushAlarm = async (fcmTokens: string[]) => {
   try {
     const message = {
       data: {
@@ -26,12 +26,12 @@ export const pushAlarm = async (fcmToken: string) => {
         body: '어쩔티비 저쩔티미 우짤레미 저짤레미 눼눼눼눼 아무말도 못하쥬?',
         style: '테스트',
       },
-      token: fcmToken,
+      tokens: fcmTokens,
     };
 
     admin
       .messaging()
-      .send(message)
+      .sendMulticast(message)
       .then(function (res) {
         console.log('Successfully sent message: : ', res);
       })
