@@ -151,3 +151,27 @@ describe('POST /timeTravel', () => {
       });
   });
 });
+
+/**
+ * 과거 유행 미디어 성공 케이스
+ * 200, 401 케이스
+ */
+describe('GET /timeTravel/oldMedia', () => {
+  // 과거 유행 미디어 조회 성공 케이스
+  it('과거 유행 미디어 조회 - 성공', (done) => {
+    req(app)
+      .get('/timeTravel/oldMedia')
+      .query({ year: '2018' })
+      .set('Content-Type', 'application/json')
+      .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        console.error('######Error >>', err);
+        done(err);
+      });
+  });
+});
