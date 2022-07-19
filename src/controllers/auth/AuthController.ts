@@ -52,8 +52,8 @@ const socialLogout = async (req: Request, res: Response, next: NextFunction) => 
   const fcmToken = req.body.fcmToken;
   const userLogoutDto: UserLogoutDto = {
     userId,
-    fcmToken
-  }
+    fcmToken,
+  };
   try {
     const data = await AuthService.socialLogout(userLogoutDto);
     if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
@@ -67,7 +67,7 @@ const socialLogout = async (req: Request, res: Response, next: NextFunction) => 
 
 const AuthContoller = {
   socialLogin,
-  socialLogout
+  socialLogout,
 };
 
 export default AuthContoller;
