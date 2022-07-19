@@ -65,11 +65,20 @@ describe('POST /auth/login/KAKAO', () => {
   });
 });
 
-describe('POST /auth/login/KAKAO', () => {
-    // 카카오 로그인 성공 케이스
-  it('카카오 로그인 - 성공', (done) => {
+/**
+ * 애플 로그인
+ * 200, 400, 401 케이스
+ */
+
+/**
+ * 로그아웃
+ * 200, 400, 401 케이스
+ */
+describe('PATCH /auth/logout', () => {
+    // 로그아웃 성공 케이스
+  it('로그아웃 - 성공', (done) => {
     req(app)
-      .post('/auth/login/KAKAO')
+      .post('/auth/logout')
       .set('Content-Type', 'application/json')
       .send({
         socialToken: process.env.KAKAO_TOKEN,
