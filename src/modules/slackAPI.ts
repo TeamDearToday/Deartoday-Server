@@ -1,24 +1,11 @@
 import axios from 'axios';
-import config from '../config/index';
-import dotenv from 'dotenv';
+import config from '../config';
 
-dotenv.config();
-
-// const SLACK = process.env.SLACK as string;
-
-const sendMessagesToSlack = (message: string, apiEndPoint: string = config.webhook) => {
+export const sendMessageToSlack = async (message: string): Promise<void> => {
   try {
-    axios
-      .post(apiEndPoint, { text: message })
-      .then()
-      .catch((error) => {
-        throw error;
-      });
+    await axios.post(config.webhook, { text: message });
   } catch (error) {
     console.log(error);
+    throw error;
   }
-};
-
-export default {
-  sendMessagesToSlack,
 };
