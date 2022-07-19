@@ -65,17 +65,7 @@ describe('POST /timeTravel', () => {
       .field('currendDate', '2022.07.19')
       .field('questions[0]', '질문1')
       .field('answers[0]', '대답1')
-      .attach('image', fs.readFileSync(`${__dirname}/image/test.jpg`))
-      //   .send({
-      //     "title": '김루희 똥방구',
-      //     "image": 'https://cdn.pixabay.com/photo/2022/04/29/17/48/lofoten-7164179_1280.jpg',
-      //     "year": 2022,
-      //     "month": 7,
-      //     "day": 19,
-      //     "currentDate": '2022.07.20',
-      //     "questions": ['질문1', '질문2', '질문3', '질문4', '질문5', '질문6', '질문7'],
-      //     "answers": ['대답1', '대답2', '대답3', '대답4', '대답5', '대답6', '대답7'],
-      //   })
+      .attach('image', path.resolve('src', 'test', 'image', 'test.JPG'))
       .expect(201)
       .then((res) => {
         done();
