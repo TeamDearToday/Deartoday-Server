@@ -31,7 +31,7 @@ describe('POST /auth/login/KAKAO', () => {
       .send({
         socialToken: process.env.KAKAO_TOKEN,
       })
-      .expect(400)
+      .expect(404)
       .then((res) => {
         done();
       })
