@@ -20,7 +20,7 @@ const postTimeTravel = async (timeTravelCreateDto: TimeTravelCreateDto): Promise
     const timeTravelQuestions = timeTravelCreateDto.questions;
     const timeTravelAnswers = timeTravelCreateDto.answers;
 
-    let messageList: MessageInfo[] = [];
+    const messageList: MessageInfo[] = [];
 
     for (let i = 0; i < timeTravelQuestions.length; i++) {
       const message = new Message({
