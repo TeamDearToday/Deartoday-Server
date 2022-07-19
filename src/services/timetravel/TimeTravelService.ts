@@ -141,7 +141,7 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
     }
 
     const timeTravelList = await TimeTravel.find({
-      user: userId,
+      userId: userId,
     });
 
     const data = await Promise.all(
