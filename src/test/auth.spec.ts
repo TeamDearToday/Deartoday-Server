@@ -9,7 +9,7 @@ dotenv.config();
  * 200, 400, 401 케이스
  */
 describe('POST /auth/login/KAKAO', () => {
-    // 카카오 로그인 성공 케이스
+  // 카카오 로그인 성공 케이스
   it('카카오 로그인 - 성공', (done) => {
     req(app)
       .post('/auth/login/KAKAO')
@@ -51,8 +51,8 @@ describe('POST /auth/login/KAKAO', () => {
       .post('/auth/login/KAKAO')
       .set('Content-Type', 'application/json')
       .send({
-        socialToken: "process.env.KAKAO_TOKEN",
-        fcmToken: "1234"
+        socialToken: 'process.env.KAKAO_TOKEN',
+        fcmToken: '1234',
       })
       .expect(401)
       .then((res) => {
@@ -75,7 +75,7 @@ describe('POST /auth/login/KAKAO', () => {
  * 200, 400, 401 케이스
  */
 describe('PATCH /auth/logout', () => {
-    // 로그아웃 성공 케이스
+  // 로그아웃 성공 케이스
   it('로그아웃 - 성공', (done) => {
     req(app)
       .patch('/auth/logout')
@@ -86,6 +86,24 @@ describe('PATCH /auth/logout', () => {
       })
       .expect(200)
       .expect('Content-Type', /json/)
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        console.error('######Error >>', err);
+        done(err);
+      });
+  });
+  // 로그아웃 유효하지 않은 fcm token
+  it('로그아웃 - 유효하지 않은 fcm token', (done) => {
+    req(app)
+      .patch('/auth/logout')
+      .set('Content-Type', 'application/json')
+      .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
+      .send({
+        fcmToken: "process.env.FCM_TOKEN",
+      })
+      .expect(404)
       .then((res) => {
         done();
       })
