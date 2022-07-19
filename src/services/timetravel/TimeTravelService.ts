@@ -169,12 +169,10 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
 
 const getTimeTravelDetail = async (timeTravelId: string): Promise<GetTimeTravelDetailDto | null> => {
   try {
-    const timeTravelDetail = await TimeTravel.findById(timeTravelId);
-
+    const timeTravelDetail = await TimeTravel.findById(timeTravelId).populate('messages', 'question answer');
     if (!timeTravelDetail) {
       return null;
     }
-
     const data: GetTimeTravelDetailDto = {
       title: timeTravelDetail.title,
       year: timeTravelDetail.year,
