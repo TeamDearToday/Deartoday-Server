@@ -230,4 +230,20 @@ describe('GET /timeTravel/question', () => {
         done(err);
       });
   });
+  // 과거 유행 미디어 조회 401
+  it('질문 목록 조회 - 유효하지 않은 토큰', (done) => {
+    req(app)
+      .get('/timeTravel/question')
+      .set('Content-Type', 'application/json')
+      .set({ Authorization: "error" })
+      .expect(401)
+      .expect('Content-Type', /json/)
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        console.error('######Error >>', err);
+        done(err);
+      });
+  });
 });
