@@ -59,7 +59,7 @@ const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | 
     }
 
     const count = await TimeTravel.find({
-      user: userId,
+      userId: user,
     }).count();
 
     const data = {
@@ -113,7 +113,7 @@ const getAnswers = async (userId: string): Promise<string[] | null> => {
     }
 
     const timeTravels = await TimeTravel.find({
-      user: userId,
+      userId: user,
     }).populate('messages', 'answer');
 
     const data = await Promise.all(
@@ -141,7 +141,7 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
     }
 
     const timeTravelList = await TimeTravel.find({
-      user: userId,
+      userId: userId,
     });
 
     const data = await Promise.all(
