@@ -252,3 +252,21 @@ describe('GET /timeTravel/question', () => {
  * 메시지 목록 조회
  * 200, 401 케이스
  */
+describe('GET /timeTravel/answers', () => {
+  // 메시지 목록 조회 성공 케이스
+  it('메시지 목록 조회 - 성공', (done) => {
+    req(app)
+      .get('/timeTravel/answers')
+      .set('Content-Type', 'application/json')
+      .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        console.error('######Error >>', err);
+        done(err);
+      });
+  });
+});
