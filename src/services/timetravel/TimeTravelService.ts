@@ -3,7 +3,6 @@ import { TimeTravelInfo } from '../../interfaces/timeTravel/TimeTravelInfo';
 import { TimeTravelCountDto } from '../../interfaces/timeTravel/TimeTravelCountDto';
 import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
 import { GetAnswersDto } from '../../interfaces/timeTravel/GetAnswersDto';
-import { GetMessageDto } from '../../interfaces/timeTravel/GetMessageDto';
 import { GetQuestionDto } from '../../interfaces/timeTravel/GetQuestionDto';
 import { GetTimeTravelDto } from '../../interfaces/timeTravel/GetTimeTravelAllDto';
 import { GetTimeTravelDetailDto } from '../../interfaces/timeTravel/GetTimeTravelDetailDto';
