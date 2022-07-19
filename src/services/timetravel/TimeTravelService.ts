@@ -113,7 +113,7 @@ const getAnswers = async (userId: string): Promise<string[] | null> => {
     }
 
     const timeTravels = await TimeTravel.find({
-      user: userId,
+      userId: user,
     }).populate('messages', 'answer');
 
     const data = await Promise.all(
