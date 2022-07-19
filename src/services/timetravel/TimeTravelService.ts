@@ -59,7 +59,7 @@ const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | 
     }
 
     const count = await TimeTravel.find({
-      user: userId,
+      userId: user,
     }).count();
 
     const data = {
