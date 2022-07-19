@@ -1,4 +1,3 @@
-import router from '../routes/index';
 import { expect } from 'chai';
 import app from '../index';
 import dotenv from 'dotenv';
