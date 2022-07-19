@@ -4,6 +4,10 @@ import dotenv from 'dotenv';
 import req from 'supertest';
 dotenv.config();
 
+/**
+ * 시간여행 개수 조회
+ * 200, 401 케이스
+ */
 describe('GET /timeTravel/count', () => {
     // 시간여행 개수 조회 성공 케이스
   it('시간여행 개수 조회 - 성공', (done) => {
