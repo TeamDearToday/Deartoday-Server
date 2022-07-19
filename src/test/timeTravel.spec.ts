@@ -118,39 +118,6 @@ describe('POST /timeTravel', () => {
         done(err);
       });
   });
-  // 시간여행 정답이나 질문 배열 길이가 7이 아닌 경우
-  it('시간여행 생성 - 배열의 길이 에러', (done) => {
-    req(app)
-      .post('/timeTravel')
-      .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
-      .set('Content-Type', 'multipart/form-data')
-      .field('title', '김루희 똥방구')
-      .field('year', 2022)
-      .field('month', 4)
-      .field('day', 19)
-      .attach('image', path.resolve(__dirname, 'image', 'test.JPG'))
-      .field('writtenDate', '2022.07.19')
-      .field('questions[0]', '질문1')
-      .field('answers[0]', '대답1')
-      .field('questions[1]', '질문2')
-      .field('answers[1]', '대답2')
-      .field('questions[2]', '질문3')
-      .field('answers[2]', '대답3')
-      .field('questions[3]', '질문4')
-      .field('answers[3]', '대답4')
-      .field('questions[4]', '질문5')
-      .field('answers[4]', '대답5')
-      .field('questions[5]', '질문6')
-      .field('answers[5]', '대답6')
-      .expect(400)
-      .then((res) => {
-        done();
-      })
-      .catch((err) => {
-        console.error('######Error >>', err);
-        done(err);
-      });
-  });
   // 시간여행 필요한 값이 없는 경우
   it('시간여행 생성 - 필요한 값 없음', (done) => {
     req(app)
