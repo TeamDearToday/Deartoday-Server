@@ -214,7 +214,7 @@ describe('GET /timeTravel/oldMedia', () => {
  * 200, 401 케이스
  */
 describe('GET /timeTravel/question', () => {
-  // 과거 유행 미디어 조회 성공 케이스
+  // 질문 목록 조회 성공 케이스
   it('질문 목록 조회 - 성공', (done) => {
     req(app)
       .get('/timeTravel/question')
@@ -230,7 +230,7 @@ describe('GET /timeTravel/question', () => {
         done(err);
       });
   });
-  // 과거 유행 미디어 조회 401
+  // 질문 목록 조회 401
   it('질문 목록 조회 - 유효하지 않은 토큰', (done) => {
     req(app)
       .get('/timeTravel/question')
