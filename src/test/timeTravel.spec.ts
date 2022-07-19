@@ -174,13 +174,29 @@ describe('GET /timeTravel/oldMedia', () => {
         done(err);
       });
   });
+  // 과거 유행 미디어 조회 400 케이스
+  it('과거 유행 미디어 조회 - query 값 없음', (done) => {
+    req(app)
+      .get('/timeTravel/oldMedia')
+      .set('Content-Type', 'application/json')
+      .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
+      .expect(400)
+      .expect('Content-Type', /json/)
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        console.error('######Error >>', err);
+        done(err);
+      });
+  });
   // 과거 유행 미디어 조회 401 케이스
   it('과거 유행 미디어 조회 - unauthorization', (done) => {
     req(app)
       .get('/timeTravel/oldMedia')
       .query({ year: '2018' })
       .set('Content-Type', 'application/json')
-      .set({ Authorization: "asdfadfsfads" })
+      .set({ Authorization: 'asdfadfsfads' })
       .expect(401)
       .expect('Content-Type', /json/)
       .then((res) => {
