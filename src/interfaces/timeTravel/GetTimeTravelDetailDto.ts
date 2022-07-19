@@ -1,3 +1,4 @@
+import { Message } from '../../models/Message';
 import { MessageInfo } from '../message/MessageInfo';
 import { GetMessageDto } from './GetMessageDto';
 
@@ -8,5 +9,5 @@ export interface GetTimeTravelDetailDto {
   month: number;
   day: number;
   writtenDate: string;
-  messages: GetMessageDto[];
+  messages: Message[];
 }
