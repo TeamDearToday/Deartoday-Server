@@ -72,7 +72,7 @@ describe('POST /auth/login/KAKAO', () => {
 
 /**
  * 로그아웃
- * 200, 400, 401 케이스
+ * 200, 400, 404 케이스
  */
 describe('PATCH /auth/logout', () => {
   // 로그아웃 성공 케이스
@@ -94,6 +94,21 @@ describe('PATCH /auth/logout', () => {
         done(err);
       });
   });
+  // 로그아웃 400 에러
+  it('로그아웃 - 필요한 값 없음', (done) => {
+    req(app)
+      .patch('/auth/logout')
+      .set('Content-Type', 'application/json')
+      .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
+      .expect(400)
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        console.error('######Error >>', err);
+        done(err);
+      });
+  });
   // 로그아웃 유효하지 않은 fcm token
   it('로그아웃 - 유효하지 않은 fcm token', (done) => {
     req(app)
@@ -101,7 +116,7 @@ describe('PATCH /auth/logout', () => {
       .set('Content-Type', 'application/json')
       .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
       .send({
-        fcmToken: "process.env.FCM_TOKEN",
+        fcmToken: 'process.env.FCM_TOKEN',
       })
       .expect(404)
       .then((res) => {
