@@ -94,6 +94,10 @@ const socialLogout = async (userLogoutDto: UserLogoutDto) => {
     }
 
     const fcmToken = userLogoutDto.fcmToken;
+    if (!fcmToken) {
+      return exceptionMessage.NULL_VALUE;
+    }
+    console.log(fcmToken);
     console.log(user);
     if (!user.fcmTokens.includes(fcmToken)) {
       return exceptionMessage.FCMTOKEN_INVALID;
