@@ -7,6 +7,7 @@ const message = {
   INTERNAL_SERVER_ERROR: '서버 잘못입니다.',
   NULL_VALUE_TOKEN: '토큰이 없습니다.',
   INVALID_PASSWORD: '비밀번호 오류입니다.',
+  BAD_QUERY: '올바르지 않은 쿼리 형식입니다.',
 
   // TimeTravel
   NO_IMAGE_FILE: '이미지가 없습니다.',
