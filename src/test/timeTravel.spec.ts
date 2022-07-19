@@ -247,3 +247,8 @@ describe('GET /timeTravel/question', () => {
       });
   });
 });
+
+/**
+ * 메시지 목록 조회
+ * 200, 401 케이스
+ */
