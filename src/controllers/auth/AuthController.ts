@@ -30,7 +30,7 @@ const socialLogin = async (req: Request, res: Response, next: NextFunction) => {
     }
 
     if (data === exceptionMessage.NULL_VALUE) {
-      return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NULL_VALUE));
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
     }
 
     if (data === null) {
