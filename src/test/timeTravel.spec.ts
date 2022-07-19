@@ -153,7 +153,7 @@ describe('POST /timeTravel', () => {
 });
 
 /**
- * 과거 유행 미디어 성공 케이스
+ * 과거 유행 미디어 조회
  * 200, 401 케이스
  */
 describe('GET /timeTravel/oldMedia', () => {
@@ -198,6 +198,29 @@ describe('GET /timeTravel/oldMedia', () => {
       .set('Content-Type', 'application/json')
       .set({ Authorization: 'asdfadfsfads' })
       .expect(401)
+      .expect('Content-Type', /json/)
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        console.error('######Error >>', err);
+        done(err);
+      });
+  });
+});
+
+/**
+ * 질문 목록 조회
+ * 200, 401 케이스
+ */
+describe('GET /timeTravel/question', () => {
+  // 과거 유행 미디어 조회 성공 케이스
+  it('질문 목록 조회 - 성공', (done) => {
+    req(app)
+      .get('/timeTravel/question')
+      .set('Content-Type', 'application/json')
+      .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
+      .expect(200)
       .expect('Content-Type', /json/)
       .then((res) => {
         done();
