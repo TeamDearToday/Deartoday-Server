@@ -13,6 +13,11 @@ import jwt from 'jsonwebtoken';
 // 토큰 리턴
 const kakaoLogin = async (userLoginDto: UserLoginDto) => {
   try {
+    // 필요한 값이 들어있는 지 체크
+    if (!userLoginDto.fcmToken || !userLoginDto.socialToken) {
+      return exceptionMessage.NULL_VALUE;
+    }
+
     const kakaoUser = await axios.get('https://kapi.kakao.com/v2/user/me', {
       headers: {
         Authorization: `Bearer ${userLoginDto.socialToken}`,
@@ -35,7 +40,7 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
       const user = new User({
         socialType: 'KAKAO',
         socialId: kakaoUserData.id as string,
-        fcmTokens: [],
+        fcmTokens: [userLoginDto.fcmToken],
       });
 
       const jwtToken = getToken(user.id);
