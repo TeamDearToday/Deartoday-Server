@@ -78,10 +78,10 @@ describe('PATCH /auth/logout', () => {
     // 로그아웃 성공 케이스
   it('로그아웃 - 성공', (done) => {
     req(app)
-      .post('/auth/logout')
+      .patch('/auth/logout')
       .set('Content-Type', 'application/json')
+      .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
       .send({
-        socialToken: process.env.KAKAO_TOKEN,
         fcmToken: process.env.FCM_TOKEN,
       })
       .expect(200)
