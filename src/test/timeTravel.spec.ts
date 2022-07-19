@@ -21,4 +21,20 @@ describe('GET /timeTravel/count', () => {
         done(err);
       });
   });
+  // 시간 여행 개수 조회 401 케이스
+  it('시간여행 개수 조회 - 유효하지 않은 토큰', (done) => {
+    req(app)
+      .get('/timeTravel/count')
+      .set('Content-Type', 'application/json')
+      .set({ Authorization: `Bearer process.env.TEST_TOKEN` })
+      .expect(401)
+      .expect('Content-Type', /json/)
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        console.error('######Error >>', err);
+        done(err);
+      });
+  });
 });
