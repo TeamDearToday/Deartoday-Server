@@ -3,6 +3,7 @@ import { TimeTravelInfo } from '../../interfaces/timeTravel/TimeTravelInfo';
 import { TimeTravelCountDto } from '../../interfaces/timeTravel/TimeTravelCountDto';
 import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
 import { GetAnswersDto } from '../../interfaces/timeTravel/GetAnswersDto';
+import { GetMessageDto } from '../../interfaces/timeTravel/GetMessageDto';
 import { GetQuestionDto } from '../../interfaces/timeTravel/GetQuestionDto';
 import { GetTimeTravelDto } from '../../interfaces/timeTravel/GetTimeTravelAllDto';
 import { GetTimeTravelDetailDto } from '../../interfaces/timeTravel/GetTimeTravelDetailDto';
@@ -169,10 +170,12 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
 
 const getTimeTravelDetail = async (timeTravelId: string): Promise<GetTimeTravelDetailDto | null> => {
   try {
-    const timeTravelDetail = await TimeTravel.findById(timeTravelId).populate('messages', 'question answer');
+    const timeTravelDetail = await TimeTravel.findById(timeTravelId, { _id: 0 }).populate('messages', 'question answer');
+
     if (!timeTravelDetail) {
       return null;
     }
+
     const data: GetTimeTravelDetailDto = {
       title: timeTravelDetail.title,
       year: timeTravelDetail.year,
