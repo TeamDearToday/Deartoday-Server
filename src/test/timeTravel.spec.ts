@@ -269,4 +269,20 @@ describe('GET /timeTravel/answers', () => {
         done(err);
       });
   });
+  // 메시지 목록 조회 실패 케이스
+  it('메시지 목록 조회 - 유효하지 않은 토큰', (done) => {
+    req(app)
+      .get('/timeTravel/answers')
+      .set('Content-Type', 'application/json')
+      .set({ Authorization: "error token" })
+      .expect(401)
+      .expect('Content-Type', /json/)
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        console.error('######Error >>', err);
+        done(err);
+      });
+  });
 });
