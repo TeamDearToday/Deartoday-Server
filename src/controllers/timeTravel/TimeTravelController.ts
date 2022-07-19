@@ -32,8 +32,9 @@ const getTimeTravelCount = async (req: Request, res: Response) => {
  */
 
 const getOldMedia = async (req: Request, res: Response) => {
-  const year = req.query.year as string;
   try {
+    const year = req.query.year as string;
+    if (!year) res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.BAD_QUERY));
     const data = await TimeTravelService.getOldMedia(parseInt(year));
     if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
 
