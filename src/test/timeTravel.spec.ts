@@ -330,4 +330,21 @@ describe('GET /timeTravel', () => {
  * 시간여행 상세 조회
  * 200, 400, 401 케이스
  */
-
+describe('GET /timeTravel/:timeTravelId', () => {
+  // 시간여행 상세 조회 성공 케이스
+  it('시간여행 상세 조회 - 성공', (done) => {
+    req(app)
+      .get(`/timeTravel/${process.env.TEST_TIMETRAVEL_ID}`)
+      .set('Content-Type', 'application/json')
+      .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        console.error('######Error >>', err);
+        done(err);
+      });
+  });
+});
