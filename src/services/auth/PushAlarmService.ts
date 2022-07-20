@@ -38,14 +38,13 @@ const pushAlarm = async (fcmTokens: string[]) => {
           },
         },
       },
-      //tokens: fcmTokens,
-      token: 'fCg8r5Q8kkZSo8wbrdsgut:APA91bFwEGVfvvIDKV5622SxbiRUbc5bPq0FnQmUFGjghXYQszKC6FTI2lUEHbdDgiGv0GazEWquuSyLydEBI-dqWm_V3fBkZ38HIb_YLht2DGFfwy07b-oxz3oLT9lPHRNaD3wvaj8-',
+      tokens: fcmTokens,
     };
 
     admin
       .messaging()
       //.sendMulticast(message)
-      .send(message)
+      .sendMulticast(message)
       .then(function (res) {
         console.log('Successfully sent message: : ', res);
       })
