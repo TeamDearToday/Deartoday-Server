@@ -25,7 +25,7 @@ const socialLogin = async (req: Request, res: Response, next: NextFunction) => {
         data = await AuthService.kakaoLogin(userLoginDto);
         break;
       case 'APPLE':
-        // data = AuthService.appleLogin(userLoginDto);
+        data = await AuthService.appleLogin(userLoginDto);
         break;
       default:
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.UNDEFINED_SOCIAL_TYPE));
