@@ -78,9 +78,9 @@ const socialLogout = async (req: Request, res: Response, next: NextFunction) => 
 };
 
 const pushAlarm = async (req: Request, res: Response, next: NextFunction) => {
+  console.log('hihihi');
+  const fcmToken = req.body.fcmToken;
   try {
-    console.log("hihihi");
-    const fcmToken = req.body.fcmToken;
     const fcmTokens = [fcmToken];
     const data = await PushAlarmService.pushAlarm(fcmTokens);
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.LOGOUT_USER_SUCCESS, data));

@@ -21,17 +21,31 @@ admin.initializeApp({
 const pushAlarm = async (fcmTokens: string[]) => {
   try {
     const message = {
-      data: {
-        title: '김루희 똥방구',
-        body: '어쩔티비 저쩔티미 우짤레미 저짤레미 눼눼눼눼 아무말도 못하쥬?',
-        style: '테스트',
+      android: {
+        data: {
+          title: '김루희 똥방구',
+          body: '어쩔티비 저쩔티미 우짤레미 저짤레미 눼눼눼눼 아무말도 못하쥬?',
+        },
       },
-      tokens: fcmTokens,
+      apns: {
+        payload: {
+          aps: {
+            contentAvailable: true,
+            alert: {
+              title: '김루희 똥방구',
+              body: '어쩔티비 저쩔티미 우짤레미 저짤레미 눼눼눼눼 아무말도 못하쥬?',
+            },
+          },
+        },
+      },
+      //tokens: fcmTokens,
+      token: 'fCg8r5Q8kkZSo8wbrdsgut:APA91bFwEGVfvvIDKV5622SxbiRUbc5bPq0FnQmUFGjghXYQszKC6FTI2lUEHbdDgiGv0GazEWquuSyLydEBI-dqWm_V3fBkZ38HIb_YLht2DGFfwy07b-oxz3oLT9lPHRNaD3wvaj8-',
     };
 
     admin
       .messaging()
-      .sendMulticast(message)
+      //.sendMulticast(message)
+      .send(message)
       .then(function (res) {
         console.log('Successfully sent message: : ', res);
       })

@@ -4,7 +4,6 @@ import auth from '../middlewares/auth';
 
 const router: Router = Router();
 
-router.get('/push', AuthContoller.pushAlarm);
 router.post('/login/:social', AuthContoller.socialLogin);
 router.patch('/logout', auth, AuthContoller.socialLogout);
 
