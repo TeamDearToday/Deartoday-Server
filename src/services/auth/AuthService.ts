@@ -84,7 +84,7 @@ const appleLogin = async (userLoginDto: UserLoginDto) => {
     // 유저가 db에 없는 경우 유저 회원 가입
     if (!existUser) {
       const user = new User({
-        socialType: 'KAKAO',
+        socialType: 'APPLE',
         socialId: (appleUser as jwt.JwtPayload).sub,
         fcmTokens: [userLoginDto.fcmToken],
       });
