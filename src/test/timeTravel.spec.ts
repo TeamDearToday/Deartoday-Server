@@ -352,8 +352,24 @@ describe('GET /timeTravel/:timeTravelId', () => {
     req(app)
       .get(`/timeTravel/${process.env.TEST_TIMETRAVEL_ID}`)
       .set('Content-Type', 'application/json')
-      .set({ Authorization: "error token" })
+      .set({ Authorization: 'error token' })
       .expect(401)
+      .expect('Content-Type', /json/)
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        console.error('######Error >>', err);
+        done(err);
+      });
+  });
+  // 시간여행 상세 조회 404 케이스
+  it('시간여행 상세 조회 - 존재 하지 않는 id', (done) => {
+    req(app)
+      .get('/timeTravel/abcd')
+      .set('Content-Type', 'application/json')
+      .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
+      .expect(404)
       .expect('Content-Type', /json/)
       .then((res) => {
         done();
