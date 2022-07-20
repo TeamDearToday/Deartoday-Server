@@ -104,7 +104,7 @@ const getQuestion = async (): Promise<GetQuestionDto | null> => {
   }
 };
 
-const getAnswers = async (userId: string): Promise<string[] | null> => {
+const getAnswers = async (userId: string): Promise<any | null> => {
   try {
     const user = await User.findById(userId);
 
