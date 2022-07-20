@@ -19,6 +19,7 @@ admin.initializeApp({
 });
 
 const pushAlarm = async (fcmTokens: string[]) => {
+  console.log(fcmTokens);
   try {
     const message = {
       android: {

@@ -48,6 +48,9 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
 
     // 유저가 db에 있으면 로그인
     existUser.accessToken = getToken(existUser.id);
+    if (!existUser.fcmTokens.includes(userLoginDto.fcmToken)) {
+      existUser.fcmTokens.push(userLoginDto.fcmToken);
+    }
     await User.findByIdAndUpdate(existUser._id, existUser);
     return existUser.accessToken;
   } catch (error) {
@@ -94,6 +97,9 @@ const appleLogin = async (userLoginDto: UserLoginDto) => {
 
     // 유저가 db에 있으면 로그인
     existUser.accessToken = getToken(existUser.id);
+    if (!existUser.fcmTokens.includes(userLoginDto.fcmToken)) {
+      existUser.fcmTokens.push(userLoginDto.fcmToken);
+    }
     //
     await PushAlarmService.pushAlarm(existUser.fcmTokens);
     //
