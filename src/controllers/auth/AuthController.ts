@@ -6,6 +6,8 @@ import message from '../../modules/responseMessage';
 import { UserLoginDto } from '../../interfaces/user/UserLoginDto';
 import { UserLogoutDto } from '../../interfaces/user/UserLogoutDto';
 import exceptionMessage from '../../modules/exceptionMessage';
+import { slackMessage } from '../../modules/slackMessage';
+import { sendMessageToSlack } from '../../modules/slackAPI';
 
 /**
  *  @route Post /login/:social
@@ -42,6 +44,8 @@ const socialLogin = async (req: Request, res: Response, next: NextFunction) => {
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.SIGNIN_USER_SUCCESS, data));
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(req.method.toUpperCase(), req.originalUrl, error, req.body.user?.id);
+    sendMessageToSlack(errorMessage);
     res.status(statusCode.INTERNAL_SERVER_ERROR).send;
   }
 };
@@ -66,6 +70,8 @@ const socialLogout = async (req: Request, res: Response, next: NextFunction) => 
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.LOGOUT_USER_SUCCESS, data));
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(req.method.toUpperCase(), req.originalUrl, error, req.body.user?.id);
+    sendMessageToSlack(errorMessage);
     res.status(statusCode.INTERNAL_SERVER_ERROR).send;
   }
 };
