@@ -3,6 +3,7 @@
 
 ### macOS ###
 # General
+firebase-adminsdk.json
 .DS_Store
 .AppleDouble
 .LSOverride
