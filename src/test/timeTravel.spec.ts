@@ -347,4 +347,20 @@ describe('GET /timeTravel/:timeTravelId', () => {
         done(err);
       });
   });
+  // 시간여행 상세 조회 401 케이스
+  it('시간여행 상세 조회 - 유효하지 않은 토큰', (done) => {
+    req(app)
+      .get(`/timeTravel/${process.env.TEST_TIMETRAVEL_ID}`)
+      .set('Content-Type', 'application/json')
+      .set({ Authorization: "error token" })
+      .expect(401)
+      .expect('Content-Type', /json/)
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        console.error('######Error >>', err);
+        done(err);
+      });
+  });
 });
