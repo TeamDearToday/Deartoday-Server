@@ -14,6 +14,7 @@ import User from '../../models/User';
 import getRandomQuestions from '../../modules/shuffleQuestion';
 import { Result } from 'express-validator';
 import Message from '../../models/Message';
+import statusCode from '../../modules/statusCode';
 
 const postTimeTravel = async (timeTravelCreateDto: TimeTravelCreateDto): Promise<TimeTravelInfo> => {
   try {
@@ -21,6 +22,10 @@ const postTimeTravel = async (timeTravelCreateDto: TimeTravelCreateDto): Promise
     const timeTravelAnswers = timeTravelCreateDto.answers;
 
     const messageList: MessageInfo[] = [];
+
+    if (timeTravelCreateDto.questions.length != 7 || timeTravelCreateDto.answers.length != 7) {
+      throw statusCode.BAD_REQUEST;
+    }
 
     for (let i = 0; i < timeTravelQuestions.length; i++) {
       const message = new Message({
@@ -42,6 +47,7 @@ const postTimeTravel = async (timeTravelCreateDto: TimeTravelCreateDto): Promise
       writtenDate: timeTravelCreateDto.writtenDate,
       messages: messageList,
     });
+
     await timeTravel.save();
 
     return timeTravel;
