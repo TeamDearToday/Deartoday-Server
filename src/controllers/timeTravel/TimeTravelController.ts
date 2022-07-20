@@ -166,8 +166,6 @@ const postTimeTravel = async (req: Request, res: Response) => {
     sendMessageToSlack(errorMessage);
     if (error == 400) {
       res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.BAD_REQUEST));
-    } else if (error == 402) {
-      res.status(statusCode.NULL_VALUE).send(util.fail(statusCode.NULL_VALUE, message.NULL_VALUE));
     } else {
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
     }
