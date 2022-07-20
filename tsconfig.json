@@ -24,6 +24,6 @@
   ],
   "exclude": [
     "node_modules", // build 시 제외
-    "tests"
+    "**/*.spec.ts" // test code
   ]
 }

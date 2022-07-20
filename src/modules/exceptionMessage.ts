@@ -1,9 +1,11 @@
+const NULL_VALUE = -1;
 const INVALID_USER = -2;
 const TOKEN_EXPIRED = -3;
 const TOKEN_INVALID = -4;
 const FCMTOKEN_INVALID = -5;
 
 export default {
+  NULL_VALUE,
   INVALID_USER,
   TOKEN_EXPIRED,
   TOKEN_INVALID,

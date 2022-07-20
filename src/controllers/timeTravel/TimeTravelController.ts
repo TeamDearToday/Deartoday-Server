@@ -4,7 +4,8 @@ import util from '../../modules/util';
 import message from '../../modules/responseMessage';
 import TimeTravelService from '../../services/timetravel/TimeTravelService';
 import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
-import TimeTravel from '../../models/TimeTravel';
+import { slackMessage } from '../../modules/slackMessage';
+import { sendMessageToSlack } from '../../modules/slackAPI';
 
 /**
  *  @route Get /count
@@ -22,6 +23,8 @@ const getTimeTravelCount = async (req: Request, res: Response) => {
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_TIME_TRAVEL_COUNT_SUCCESS, data));
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(req.method.toUpperCase(), req.originalUrl, error, req.body.user?.id);
+    sendMessageToSlack(errorMessage);
     res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
   }
 };
@@ -33,8 +36,9 @@ const getTimeTravelCount = async (req: Request, res: Response) => {
  */
 
 const getOldMedia = async (req: Request, res: Response) => {
-  const year = req.query.year as string;
   try {
+    const year = req.query.year as string;
+    if (!year) res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.BAD_QUERY));
     const data = await TimeTravelService.getOldMedia(parseInt(year));
     if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
 
@@ -59,6 +63,8 @@ const getQuestion = async (req: Request, res: Response) => {
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_QUESTIONS_SUCCESS, data));
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(req.method.toUpperCase(), req.originalUrl, error, req.body.user?.id);
+    sendMessageToSlack(errorMessage);
     res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
   }
 };
@@ -69,7 +75,18 @@ const getQuestion = async (req: Request, res: Response) => {
  *  @access Public
  */
 
-const getAnswers = async (req: Request, res: Response) => {};
+const getAnswers = async (req: Request, res: Response) => {
+  const userId = req.body.userId;
+  try {
+    const result = await TimeTravelService.getAnswers(userId);
+    if (!result) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+
+    res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_ANSWERS_SUCCESS, result));
+  } catch (error) {
+    console.log(error);
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
+};
 
 /**
  *  @route Get /:timeTravelId
@@ -77,8 +94,19 @@ const getAnswers = async (req: Request, res: Response) => {};
  *  @access Public
  */
 
-const getTimeTravelId = async (req: Request, res: Response) => {
-  const { timeTravelId } = req.params;
+const getTimeTravelDetail = async (req: Request, res: Response) => {
+  const timeTravelId = req.params.timeTravelId;
+
+  try {
+    const data = await TimeTravelService.getTimeTravelDetail(timeTravelId);
+    if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+    res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_TIME_TRAVEL_DETAIL_SUCCESS, data));
+  } catch (error) {
+    console.log(error);
+    const errorMessage: string = slackMessage(req.method.toUpperCase(), req.originalUrl, error, req.body.user?.id);
+    sendMessageToSlack(errorMessage);
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
 };
 
 /**
@@ -129,12 +157,13 @@ const postTimeTravel = async (req: Request, res: Response) => {
   };
 
   try {
-    console.log(timeTravelCreateDto);
-    const timeTravel = new TimeTravel(timeTravelCreateDto);
-    await timeTravel.save();
+    const data = await TimeTravelService.postTimeTravel(timeTravelCreateDto);
+    if (!data) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
     res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, message.CREATE_TIMETRAVEL));
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(req.method.toUpperCase(), req.originalUrl, error, req.body.user?.id);
+    sendMessageToSlack(errorMessage);
     res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
   }
 };
@@ -146,7 +175,7 @@ const TimeTravelController = {
   postTimeTravel,
   getAnswers,
   getTimeTravelList,
-  getTimeTravelId,
+  getTimeTravelDetail,
 };
 
 export default TimeTravelController;

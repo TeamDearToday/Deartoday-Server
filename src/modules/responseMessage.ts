@@ -7,6 +7,7 @@ const message = {
   INTERNAL_SERVER_ERROR: '서버 잘못입니다.',
   NULL_VALUE_TOKEN: '토큰이 없습니다.',
   INVALID_PASSWORD: '비밀번호 오류입니다.',
+  BAD_QUERY: '올바르지 않은 쿼리 형식입니다.',
 
   // TimeTravel
   NO_IMAGE_FILE: '이미지가 없습니다.',
@@ -28,6 +29,8 @@ const message = {
   // 타임트레블 관련
   GET_TIME_TRAVEL_COUNT_SUCCESS: '시간여행 개수 조회 성공',
   GET_QUESTIONS_SUCCESS: '질문을 들고오는데 성공했습니다.',
+  GET_ANSWERS_SUCCESS: '메세지 목록 조회 성공했습니다.',
+  GET_TIME_TRAVEL_DETAIL_SUCCESS: '시간여행 상세조회를 성공했습니다.',
   GET_TIME_TRAVEL_LIST_SUCCESS: '시간여행 목록 불러오기 성공',
   GET_OLDMEDIA_SUCCESS: '과거에 유행했던 미디어 들고오기 성공.',
 };
