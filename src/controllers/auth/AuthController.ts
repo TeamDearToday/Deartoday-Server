@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import statusCode from '../../modules/statusCode';
 import AuthService from '../../services/auth/AuthService';
+import pushAlarm from '../../services/auth/PushAlarmService';
 import util from '../../modules/util';
 import message from '../../modules/responseMessage';
 import { UserLoginDto } from '../../interfaces/user/UserLoginDto';
@@ -76,9 +77,16 @@ const socialLogout = async (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
+const pushAlarm = async (req: Request, res: Response, next: NextFunction) => {
+  const fcmToken = req.body.fcmToken;
+  const fcmTokens = [fcmToken];
+  const data = await Push
+};
+
 const AuthContoller = {
   socialLogin,
   socialLogout,
+  pushAlarm,
 };
 
 export default AuthContoller;

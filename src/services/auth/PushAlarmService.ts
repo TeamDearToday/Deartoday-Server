@@ -18,7 +18,7 @@ admin.initializeApp({
   credential: admin.credential.cert(firebaseKeys),
 });
 
-export const pushAlarm = async (fcmTokens: string[]) => {
+const pushAlarm = async (fcmTokens: string[]) => {
   try {
     const message = {
       data: {
@@ -43,3 +43,9 @@ export const pushAlarm = async (fcmTokens: string[]) => {
     throw error;
   }
 };
+
+const PushAlarmService = {
+  pushAlarm
+};
+
+export default PushAlarmService;
