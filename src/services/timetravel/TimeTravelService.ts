@@ -116,7 +116,7 @@ const getAnswers = async (userId: string): Promise<string[] | null> => {
       userId: user,
     }).populate('messages', 'answer');
 
-    const data = await Promise.all(
+    const lastAnswer = await Promise.all(
       timeTravels.map(async (timeTravel) => {
         const result: GetAnswersDto = {
           lastAnswer: timeTravel.messages[timeTravel.messages.length - 1].answer,
@@ -125,6 +125,10 @@ const getAnswers = async (userId: string): Promise<string[] | null> => {
         return result.lastAnswer;
       }),
     );
+
+    const data = {
+      lastAnswer,
+    };
 
     return data;
   } catch (error) {
@@ -169,7 +173,7 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
 
 const getTimeTravelDetail = async (timeTravelId: string): Promise<GetTimeTravelDetailDto | null> => {
   try {
-    if(!mongoose.Types.ObjectId.isValid(timeTravelId)) return null;
+    if (!mongoose.Types.ObjectId.isValid(timeTravelId)) return null;
     const timeTravelDetail = await TimeTravel.findById(timeTravelId).populate('messages', 'question answer -_id');
 
     if (!timeTravelDetail) {
