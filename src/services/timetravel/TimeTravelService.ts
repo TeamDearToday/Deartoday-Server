@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { MongooseError } from 'mongoose';
 import { TimeTravelInfo } from '../../interfaces/timeTravel/TimeTravelInfo';
 import { TimeTravelCountDto } from '../../interfaces/timeTravel/TimeTravelCountDto';
 import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
@@ -59,7 +59,7 @@ const getTimeTravelCount = async (userId: string): Promise<TimeTravelCountDto | 
     }
 
     const count = await TimeTravel.find({
-      user: userId,
+      userId: user,
     }).count();
 
     const data = {
@@ -104,7 +104,7 @@ const getQuestion = async (): Promise<GetQuestionDto | null> => {
   }
 };
 
-const getAnswers = async (userId: string): Promise<string[] | null> => {
+const getAnswers = async (userId: string): Promise<any | null> => {
   try {
     const user = await User.findById(userId);
 
@@ -113,10 +113,10 @@ const getAnswers = async (userId: string): Promise<string[] | null> => {
     }
 
     const timeTravels = await TimeTravel.find({
-      user: userId,
+      userId: user,
     }).populate('messages', 'answer');
 
-    const data = await Promise.all(
+    const lastAnswer = await Promise.all(
       timeTravels.map(async (timeTravel) => {
         const result: GetAnswersDto = {
           lastAnswer: timeTravel.messages[timeTravel.messages.length - 1].answer,
@@ -125,6 +125,10 @@ const getAnswers = async (userId: string): Promise<string[] | null> => {
         return result.lastAnswer;
       }),
     );
+
+    const data = {
+      lastAnswer,
+    };
 
     return data;
   } catch (error) {
@@ -141,7 +145,7 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
     }
 
     const timeTravelList = await TimeTravel.find({
-      user: userId,
+      userId: userId,
     });
 
     const data = await Promise.all(
@@ -169,10 +173,13 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
 
 const getTimeTravelDetail = async (timeTravelId: string): Promise<GetTimeTravelDetailDto | null> => {
   try {
-    const timeTravelDetail = await TimeTravel.findById(timeTravelId).populate('messages', 'question answer');
+    if (!mongoose.Types.ObjectId.isValid(timeTravelId)) return null;
+    const timeTravelDetail = await TimeTravel.findById(timeTravelId).populate('messages', 'question answer -_id');
+
     if (!timeTravelDetail) {
       return null;
     }
+
     const data: GetTimeTravelDetailDto = {
       title: timeTravelDetail.title,
       year: timeTravelDetail.year,
