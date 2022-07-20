@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { MongooseError } from 'mongoose';
 import { TimeTravelInfo } from '../../interfaces/timeTravel/TimeTravelInfo';
 import { TimeTravelCountDto } from '../../interfaces/timeTravel/TimeTravelCountDto';
 import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
@@ -169,6 +169,7 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
 
 const getTimeTravelDetail = async (timeTravelId: string): Promise<GetTimeTravelDetailDto | null> => {
   try {
+    if(!mongoose.Types.ObjectId.isValid(timeTravelId)) return null;
     const timeTravelDetail = await TimeTravel.findById(timeTravelId).populate('messages', 'question answer -_id');
 
     if (!timeTravelDetail) {
