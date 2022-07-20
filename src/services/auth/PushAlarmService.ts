@@ -38,6 +38,7 @@ const pushAlarm = async (fcmTokens: string[]) => {
       .catch(function (err) {
         console.log('Error Sending message!!! : ', err);
       });
+    return 'hello';
   } catch (error) {
     console.log(error);
     throw error;
@@ -45,7 +46,7 @@ const pushAlarm = async (fcmTokens: string[]) => {
 };
 
 const PushAlarmService = {
-  pushAlarm
+  pushAlarm,
 };
 
 export default PushAlarmService;
