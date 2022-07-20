@@ -169,6 +169,7 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
 
 const getTimeTravelDetail = async (timeTravelId: string): Promise<GetTimeTravelDetailDto | null> => {
   try {
+    if(!mongoose.Types.ObjectId.isValid(timeTravelId)) return null;
     const timeTravelDetail = await TimeTravel.findById(timeTravelId).populate('messages', 'question answer -_id');
 
     if (!timeTravelDetail) {
@@ -187,9 +188,6 @@ const getTimeTravelDetail = async (timeTravelId: string): Promise<GetTimeTravelD
 
     return data;
   } catch (error) {
-    if (error instanceof Error) {
-      if(error.name === 'CastError') return null;
-    }
     console.log(error);
     throw error;
   }
