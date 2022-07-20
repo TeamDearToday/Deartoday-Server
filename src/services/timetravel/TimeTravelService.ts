@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { MongooseError } from 'mongoose';
 import { TimeTravelInfo } from '../../interfaces/timeTravel/TimeTravelInfo';
 import { TimeTravelCountDto } from '../../interfaces/timeTravel/TimeTravelCountDto';
 import { TimeTravelCreateDto } from '../../interfaces/timeTravel/TimeTravelCreateDto';
@@ -187,6 +187,9 @@ const getTimeTravelDetail = async (timeTravelId: string): Promise<GetTimeTravelD
 
     return data;
   } catch (error) {
+    if (error instanceof Error) {
+      if(error.name === 'CastError') return null;
+    }
     console.log(error);
     throw error;
   }
