@@ -13,7 +13,7 @@ import jwt from 'jsonwebtoken';
 // 토큰 리턴
 const kakaoLogin = async (userLoginDto: UserLoginDto) => {
   try {
-    // 필요한 값이 들어있는 지 체크
+    // 필요한 값이 들어있는지 체크
     if (!userLoginDto.fcmToken || !userLoginDto.socialToken) {
       return exceptionMessage.NULL_VALUE;
     }
@@ -62,24 +62,48 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
 
 const appleLogin = async (userLoginDto: UserLoginDto) => {
   try {
-    const user = jwt.decode(userLoginDto.socialToken);
+    // 필요한 값이 들어있는지 체크
+    if (!userLoginDto.fcmToken || !userLoginDto.socialToken) {
+      return exceptionMessage.NULL_VALUE;
+    }
+    const appleUser = jwt.decode(userLoginDto.socialToken);
 
     // 애플 유저 토큰 에러
-    if (user === null) {
+    if (appleUser === null) {
       return null;
     }
-    if (!(user as jwt.JwtPayload).sub) {
+    if (!(appleUser as jwt.JwtPayload).sub) {
       return exceptionMessage.INVALID_USER;
     }
+
+    // 유저가 있는지 확인
+    const existUser = await User.findOne({
+      socialId: (appleUser as jwt.JwtPayload).sub,
+    });
+
+    // 유저가 db에 없는 경우 유저 회원 가입
+    if (!existUser) {
+      const user = new User({
+        socialType: 'APPLE',
+        socialId: (appleUser as jwt.JwtPayload).sub,
+        fcmTokens: [userLoginDto.fcmToken],
+      });
+
+      const jwtToken = getToken(user.id);
+      user.accessToken = jwtToken;
+      await user.save();
+
+      return jwtToken;
+    }
+
+    // 유저가 db에 있으면 로그인
+    existUser.accessToken = getToken(existUser.id);
+    await User.findByIdAndUpdate(existUser._id, existUser);
+    return existUser.accessToken;
   } catch (error) {
     console.log('apple token error');
     return null;
   }
-  // jwt decode 하면 그냥 바로 유저정보 가져올 수 있어 통신 안해도
-  // 토큰 발급
-  // 유저 확인하기 -> 있으면 바로 리턴 (토큰은 발급해줘야징)
-  // 없으면 -> 유저정보 디비에 넣어줘 create + 토큰 발급해주기
-  // 토큰 리턴
 };
 
 const socialLogout = async (userLogoutDto: UserLogoutDto) => {
@@ -99,20 +123,20 @@ const socialLogout = async (userLogoutDto: UserLogoutDto) => {
       return exceptionMessage.FCMTOKEN_INVALID;
     }
 
-    for(let i = 0; i < user.fcmTokens.length; i++) {
-      if(user.fcmTokens[i] === fcmToken)  {
+    for (let i = 0; i < user.fcmTokens.length; i++) {
+      if (user.fcmTokens[i] === fcmToken) {
         user.fcmTokens.splice(i, 1);
         i--;
       }
     }
     const fcmTokens = user.fcmTokens;
-    await user.updateOne({fcmTokens});
+    await user.updateOne({ fcmTokens });
     return { user };
   } catch (error) {
     console.log(error);
     throw error;
   }
-}
+};
 
 const AuthService = {
   kakaoLogin,
