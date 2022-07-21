@@ -5,12 +5,8 @@ import User from '../../models/User';
 import getToken from '../../modules/jwtHandler';
 import exceptionMessage from '../../modules/exceptionMessage';
 import jwt from 'jsonwebtoken';
+import PushAlarmService from './PushAlarmService';
 
-// 카카오랑 통신하기 -> 유저 정보 가져와
-// 토큰 발급
-// 유저 확인하기 -> 있으면 바로 리턴 (토큰은 발급해줘야징)
-// 없으면 -> 유저정보 디비에 넣어줘 create + 토큰 발급해주기
-// 토큰 리턴
 const kakaoLogin = async (userLoginDto: UserLoginDto) => {
   try {
     // 필요한 값이 들어있는지 체크
@@ -52,6 +48,9 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
 
     // 유저가 db에 있으면 로그인
     existUser.accessToken = getToken(existUser.id);
+    if (!existUser.fcmTokens.includes(userLoginDto.fcmToken)) {
+      existUser.fcmTokens.push(userLoginDto.fcmToken);
+    }
     await User.findByIdAndUpdate(existUser._id, existUser);
     return existUser.accessToken;
   } catch (error) {
@@ -98,6 +97,12 @@ const appleLogin = async (userLoginDto: UserLoginDto) => {
 
     // 유저가 db에 있으면 로그인
     existUser.accessToken = getToken(existUser.id);
+    if (!existUser.fcmTokens.includes(userLoginDto.fcmToken)) {
+      existUser.fcmTokens.push(userLoginDto.fcmToken);
+    }
+    //
+    await PushAlarmService.pushAlarm(existUser.fcmTokens);
+    //
     await User.findByIdAndUpdate(existUser._id, existUser);
     return existUser.accessToken;
   } catch (error) {
