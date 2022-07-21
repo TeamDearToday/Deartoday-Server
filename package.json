@@ -9,6 +9,7 @@
     "dev": "nodemon",
     "build": "tsc && node dist",
     "test": "mocha -r ts-node/register src/test/*.spec.ts",
+    "lint": "./node_modules/.bin/eslint .",
     "lint-staged": "lint-staged",
     "prepare": "husky install"
   },
