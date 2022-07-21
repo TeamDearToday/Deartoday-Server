@@ -89,6 +89,23 @@ describe('POST /auth/login/APPLE', () => {
         done(err);
       });
   });
+  // 애플 로그인 400 에러
+  it('애플 로그인 - 필요한 값 없음', (done) => {
+    req(app)
+      .post('/auth/login/APPLE')
+      .set('Content-Type', 'application/json')
+      .send({
+        socialToken: process.env.APPLE_TOKEN,
+      })
+      .expect(400)
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        console.error('######Error >>', err);
+        done(err);
+      });
+  });
 });
 
 /**
