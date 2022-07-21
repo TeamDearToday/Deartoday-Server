@@ -77,23 +77,9 @@ const socialLogout = async (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
-const pushAlarm = async (req: Request, res: Response, next: NextFunction) => {
-  console.log('hihihi');
-  const fcmToken = req.body.fcmToken;
-  try {
-    const fcmTokens = [fcmToken];
-    const data = await PushAlarmService.pushAlarm(fcmTokens);
-    res.status(statusCode.OK).send(util.success(statusCode.OK, message.LOGOUT_USER_SUCCESS, data));
-  } catch (error) {
-    console.log(error);
-    res.status(statusCode.INTERNAL_SERVER_ERROR).send;
-  }
-};
-
 const AuthContoller = {
   socialLogin,
   socialLogout,
-  pushAlarm,
 };
 
 export default AuthContoller;

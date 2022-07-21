@@ -18,12 +18,12 @@ admin.initializeApp({
   credential: admin.credential.cert(firebaseKeys),
 });
 
-const pushAlarm = async (fcmTokens: string[]) => {
+const pushAlarm = async (fcmTokens: string[], lastMessage: string) => {
   try {
     const message = {
       android: {
         notification: {
-          body: "1"
+          body: lastMessage
         },
       },
       apns: {

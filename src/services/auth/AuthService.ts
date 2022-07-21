@@ -5,7 +5,6 @@ import User from '../../models/User';
 import getToken from '../../modules/jwtHandler';
 import exceptionMessage from '../../modules/exceptionMessage';
 import jwt from 'jsonwebtoken';
-import PushAlarmService from './PushAlarmService';
 
 const kakaoLogin = async (userLoginDto: UserLoginDto) => {
   try {
