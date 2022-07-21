@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "nodemon",
     "build": "tsc && node dist",
-    "test": "mocha -r ts-node/register src/**/*.spec.ts"
+    "test": "mocha -r ts-node/register src/test/*.spec.ts"
   },
   "dependencies": {
     "aws-sdk": "^2.1174.0",
