@@ -1,6 +1,9 @@
+import Agenda from 'agenda';
 import admin from 'firebase-admin';
 import serviceAccount from '../../../firebase-adminsdk.json';
+import config from '../../config';
 
+// firebase setting
 const firebaseKeys = {
   type: serviceAccount.type,
   projectId: serviceAccount.project_id,
@@ -17,6 +20,12 @@ const firebaseKeys = {
 admin.initializeApp({
   credential: admin.credential.cert(firebaseKeys),
 });
+
+// agenda setting
+const agenda = new Agenda({
+  db: { address: config.mongoURI },
+  name: 'scheduling'
+})
 
 const pushAlarm = async (fcmTokens: string[], lastMessage: string) => {
   try {
