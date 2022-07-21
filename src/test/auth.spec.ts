@@ -106,6 +106,24 @@ describe('POST /auth/login/APPLE', () => {
         done(err);
       });
   });
+  // 애플 로그인 401 에러
+  it('애플 로그인 - 유효하지 않은 토큰', (done) => {
+    req(app)
+      .post('/auth/login/APPLE')
+      .set('Content-Type', 'application/json')
+      .send({
+        socialToken: 'process.env.APPLE_TOKEN',
+        fcmToken: '1234',
+      })
+      .expect(401)
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        console.error('######Error >>', err);
+        done(err);
+      });
+  });
 });
 
 /**
