@@ -69,6 +69,27 @@ describe('POST /auth/login/KAKAO', () => {
  * 애플 로그인
  * 200, 400, 401 케이스
  */
+describe('POST /auth/login/APPLE', () => {
+  // 애플 로그인 성공 케이스
+  it('애플 로그인 - 성공', (done) => {
+    req(app)
+      .post('/auth/login/APPLE')
+      .set('Content-Type', 'application/json')
+      .send({
+        socialToken: process.env.APPLE_TOKEN,
+        fcmToken: process.env.FCM_TOKEN,
+      })
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        console.error('######Error >>', err);
+        done(err);
+      });
+  });
+});
 
 /**
  * 로그아웃
