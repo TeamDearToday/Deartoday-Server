@@ -23,7 +23,8 @@ const pushAlarm = async (fcmTokens: string[], lastMessage: string) => {
     const message = {
       android: {
         notification: {
-          body: lastMessage
+          title: '미래의 나에게서 메시지가 도착했어요!',
+          body: lastMessage,
         },
       },
       apns: {
@@ -31,7 +32,8 @@ const pushAlarm = async (fcmTokens: string[], lastMessage: string) => {
           aps: {
             contentAvailable: true,
             alert: {
-              body: '어쩔티비 저쩔티미 우짤레미 저짤레미 눼눼눼눼 아무말도 못하쥬?',
+              title: '미래의 나에게서 메시지가 도착했어요!',
+              body: lastMessage,
             },
           },
         },
