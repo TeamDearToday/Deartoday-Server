@@ -160,7 +160,7 @@ const getTimeTravelList = async (userId: string): Promise<GetTimeTravelDto[] | n
 
     const timeTravelList = await TimeTravel.find({
       userId: userId,
-    });
+    }).sort({ "year": 1, "month": 1, "day": 1});
 
     const data = await Promise.all(
       timeTravelList.map(async (timeTravel) => {
