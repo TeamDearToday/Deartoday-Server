@@ -15,9 +15,14 @@ import getRandomQuestions from '../../modules/shuffleQuestion';
 import { Result } from 'express-validator';
 import Message from '../../models/Message';
 import statusCode from '../../modules/statusCode';
+import PushAlarmService from '../auth/PushAlarmService';
 
-const postTimeTravel = async (timeTravelCreateDto: TimeTravelCreateDto): Promise<TimeTravelInfo> => {
+const postTimeTravel = async (timeTravelCreateDto: TimeTravelCreateDto): Promise<TimeTravelInfo | null> => {
   try {
+    const user = await User.findById(timeTravelCreateDto.userId);
+    if (!user) {
+      return null;
+    }
     const timeTravelQuestions = timeTravelCreateDto.questions;
     const timeTravelAnswers = timeTravelCreateDto.answers;
 
@@ -49,6 +54,9 @@ const postTimeTravel = async (timeTravelCreateDto: TimeTravelCreateDto): Promise
     });
 
     await timeTravel.save();
+
+    // 푸시 알림 생성
+    await PushAlarmService.pushAlarm(user.fcmTokens, timeTravelAnswers[timeTravelAnswers.length - 1]);
 
     return timeTravel;
   } catch (error) {

@@ -18,14 +18,13 @@ admin.initializeApp({
   credential: admin.credential.cert(firebaseKeys),
 });
 
-const pushAlarm = async (fcmTokens: string[]) => {
-  console.log(fcmTokens);
+const pushAlarm = async (fcmTokens: string[], lastMessage: string) => {
   try {
     const message = {
       android: {
-        data: {
-          title: '김루희 똥방구',
-          body: '어쩔티비 저쩔티미 우짤레미 저짤레미 눼눼눼눼 아무말도 못하쥬?',
+        notification: {
+          title: '미래의 나에게서 메시지가 도착했어요!',
+          body: lastMessage,
         },
       },
       apns: {
@@ -33,8 +32,8 @@ const pushAlarm = async (fcmTokens: string[]) => {
           aps: {
             contentAvailable: true,
             alert: {
-              title: '김루희 똥방구',
-              body: '어쩔티비 저쩔티미 우짤레미 저짤레미 눼눼눼눼 아무말도 못하쥬?',
+              title: '미래의 나에게서 메시지가 도착했어요!',
+              body: lastMessage,
             },
           },
         },
@@ -44,7 +43,6 @@ const pushAlarm = async (fcmTokens: string[]) => {
 
     admin
       .messaging()
-      //.sendMulticast(message)
       .sendMulticast(message)
       .then(function (res) {
         console.log('Successfully sent message: : ', res);
@@ -52,7 +50,6 @@ const pushAlarm = async (fcmTokens: string[]) => {
       .catch(function (err) {
         console.log('Error Sending message!!! : ', err);
       });
-    return 'hello';
   } catch (error) {
     console.log(error);
     throw error;

@@ -5,7 +5,6 @@ import User from '../../models/User';
 import getToken from '../../modules/jwtHandler';
 import exceptionMessage from '../../modules/exceptionMessage';
 import jwt from 'jsonwebtoken';
-import PushAlarmService from './PushAlarmService';
 
 const kakaoLogin = async (userLoginDto: UserLoginDto) => {
   try {
@@ -100,9 +99,6 @@ const appleLogin = async (userLoginDto: UserLoginDto) => {
     if (!existUser.fcmTokens.includes(userLoginDto.fcmToken)) {
       existUser.fcmTokens.push(userLoginDto.fcmToken);
     }
-    //
-    await PushAlarmService.pushAlarm(existUser.fcmTokens);
-    //
     await User.findByIdAndUpdate(existUser._id, existUser);
     return existUser.accessToken;
   } catch (error) {
