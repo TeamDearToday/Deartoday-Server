@@ -122,8 +122,6 @@ const socialLogout = async (userLogoutDto: UserLogoutDto) => {
     if (!fcmToken) {
       return exceptionMessage.NULL_VALUE;
     }
-    console.log(fcmToken);
-    console.log(user);
     if (!user.fcmTokens.includes(fcmToken)) {
       return exceptionMessage.FCMTOKEN_INVALID;
     }
@@ -136,7 +134,7 @@ const socialLogout = async (userLogoutDto: UserLogoutDto) => {
     }
     const fcmTokens = user.fcmTokens;
     await user.updateOne({ fcmTokens });
-    return { user };
+    return fcmToken;
   } catch (error) {
     console.log(error);
     throw error;
