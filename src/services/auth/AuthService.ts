@@ -100,9 +100,6 @@ const appleLogin = async (userLoginDto: UserLoginDto) => {
     if (!existUser.fcmTokens.includes(userLoginDto.fcmToken)) {
       existUser.fcmTokens.push(userLoginDto.fcmToken);
     }
-    //
-    await PushAlarmService.pushAlarm(existUser.fcmTokens);
-    //
     await User.findByIdAndUpdate(existUser._id, existUser);
     return existUser.accessToken;
   } catch (error) {
