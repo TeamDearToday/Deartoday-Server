@@ -8,7 +8,15 @@
   "scripts": {
     "dev": "nodemon",
     "build": "tsc && node dist",
-    "test": "mocha -r ts-node/register src/test/*.spec.ts"
+    "test": "mocha -r ts-node/register src/test/*.spec.ts -exit",
+    "lint": "./node_modules/.bin/eslint .",
+    "lint-staged": "lint-staged",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*.ts": [
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "aws-sdk": "^2.1174.0",
@@ -40,6 +48,8 @@
     "@typescript-eslint/parser": "^5.30.3",
     "chai": "^4.3.6",
     "eslint": "^8.19.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.18",
     "prettier": "^2.7.1",
