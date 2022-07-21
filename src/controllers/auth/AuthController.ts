@@ -44,7 +44,7 @@ const socialLogin = async (req: Request, res: Response, next: NextFunction) => {
     };
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.SIGNIN_USER_SUCCESS, data));
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     const errorMessage: string = slackMessage(req.method.toUpperCase(), req.originalUrl, error, req.body.user?.id);
     sendMessageToSlack(errorMessage);
     res.status(statusCode.INTERNAL_SERVER_ERROR).send;
@@ -70,7 +70,7 @@ const socialLogout = async (req: Request, res: Response, next: NextFunction) => 
     if (data === exceptionMessage.FCMTOKEN_INVALID) res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.INVALID_FCMTOKEN));
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.LOGOUT_USER_SUCCESS, data));
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     const errorMessage: string = slackMessage(req.method.toUpperCase(), req.originalUrl, error, req.body.user?.id);
     sendMessageToSlack(errorMessage);
     res.status(statusCode.INTERNAL_SERVER_ERROR).send;
@@ -85,7 +85,7 @@ const pushAlarm = async (req: Request, res: Response, next: NextFunction) => {
     const data = await PushAlarmService.pushAlarm(fcmTokens);
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.LOGOUT_USER_SUCCESS, data));
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     res.status(statusCode.INTERNAL_SERVER_ERROR).send;
   }
 };

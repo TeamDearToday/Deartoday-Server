@@ -19,7 +19,7 @@ admin.initializeApp({
 });
 
 const pushAlarm = async (fcmTokens: string[]) => {
-  console.log(fcmTokens);
+  //console.log(fcmTokens);
   try {
     const message = {
       android: {
@@ -47,10 +47,10 @@ const pushAlarm = async (fcmTokens: string[]) => {
       //.sendMulticast(message)
       .sendMulticast(message)
       .then(function (res) {
-        console.log('Successfully sent message: : ', res);
+        //console.log('Successfully sent message: : ', res);
       })
       .catch(function (err) {
-        console.log('Error Sending message!!! : ', err);
+        //console.log('Error Sending message!!! : ', err);
       });
     return 'hello';
   } catch (error) {

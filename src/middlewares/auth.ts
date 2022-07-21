@@ -32,7 +32,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
     // 다음으로 넘기기
     next();
   } catch (error: any) {
-    console.log(error);
+    //console.log(error);
     if (error.name === 'TokenExpiredError') {
       return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.EXPIRED_TOKEN));
     } else if (error.name === 'JsonWebTokenError') {

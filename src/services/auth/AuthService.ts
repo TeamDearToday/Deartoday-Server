@@ -54,7 +54,7 @@ const kakaoLogin = async (userLoginDto: UserLoginDto) => {
     await User.findByIdAndUpdate(existUser._id, existUser);
     return existUser.accessToken;
   } catch (error) {
-    console.log('kakao token error');
+    //console.log('kakao token error');
     return null;
   }
 };
@@ -106,7 +106,7 @@ const appleLogin = async (userLoginDto: UserLoginDto) => {
     await User.findByIdAndUpdate(existUser._id, existUser);
     return existUser.accessToken;
   } catch (error) {
-    console.log('apple token error');
+    //console.log('apple token error');
     return null;
   }
 };
@@ -122,8 +122,8 @@ const socialLogout = async (userLogoutDto: UserLogoutDto) => {
     if (!fcmToken) {
       return exceptionMessage.NULL_VALUE;
     }
-    console.log(fcmToken);
-    console.log(user);
+    //console.log(fcmToken);
+    //console.log(user);
     if (!user.fcmTokens.includes(fcmToken)) {
       return exceptionMessage.FCMTOKEN_INVALID;
     }
