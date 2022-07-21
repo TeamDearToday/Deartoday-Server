@@ -12,7 +12,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn run test",
+      "pre-commit": "echo 'Hello Gabia, woof!'",
       "pre-push": "yarn run test"
     }
   },
