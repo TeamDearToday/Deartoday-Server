@@ -10,6 +10,12 @@
     "build": "tsc && node dist",
     "test": "mocha -r ts-node/register src/test/*.spec.ts"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run test",
+      "pre-push": "yarn run test"
+    }
+  },
   "dependencies": {
     "aws-sdk": "^2.1174.0",
     "axios": "^0.27.2",
