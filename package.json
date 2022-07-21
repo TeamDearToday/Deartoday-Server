@@ -18,12 +18,6 @@
       "eslint --fix"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "echo 'Hello Gabia, woof!'",
-      "pre-push": "yarn run test"
-    }
-  },
   "dependencies": {
     "aws-sdk": "^2.1174.0",
     "axios": "^0.27.2",
@@ -54,7 +48,7 @@
     "@typescript-eslint/parser": "^5.30.3",
     "chai": "^4.3.6",
     "eslint": "^8.19.0",
-    "husky": "^8.0.1",
+    "husky": "^8.0.0",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.18",
     "prettier": "^2.7.1",
