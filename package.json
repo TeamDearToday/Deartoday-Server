@@ -8,7 +8,14 @@
   "scripts": {
     "dev": "nodemon",
     "build": "tsc && node dist",
-    "test": "mocha -r ts-node/register src/test/*.spec.ts"
+    "test": "mocha -r ts-node/register src/test/*.spec.ts",
+    "lint-staged": "lint-staged",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*.ts": [
+      "eslint --fix"
+    ]
   },
   "husky": {
     "hooks": {
