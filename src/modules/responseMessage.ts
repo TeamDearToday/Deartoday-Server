@@ -9,9 +9,6 @@ const message = {
   INVALID_PASSWORD: '비밀번호 오류입니다.',
   BAD_QUERY: '올바르지 않은 쿼리 형식입니다.',
 
-  // TimeTravel
-  NO_IMAGE_FILE: '이미지가 없습니다.',
-  CREATE_TIMETRAVEL: '시간여행을 생성했습니다.',
   // 유저 관련
   NO_USER: '유저가 존재하지 않습니다.',
   SIGNIN_USER_SUCCESS: '로그인 성공',
@@ -27,6 +24,8 @@ const message = {
   INVALID_FCMTOKEN: '유효하지 않은 FCM토큰입니다.',
 
   // 타임트레블 관련
+  NO_IMAGE_FILE: '이미지가 없습니다.',
+  CREATE_TIMETRAVEL: '시간여행을 생성했습니다.',
   GET_TIME_TRAVEL_COUNT_SUCCESS: '시간여행 개수 조회 성공',
   GET_QUESTIONS_SUCCESS: '질문을 들고오는데 성공했습니다.',
   GET_ANSWERS_SUCCESS: '메세지 목록 조회 성공했습니다.',
