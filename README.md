@@ -23,7 +23,7 @@
 |![tape+pic](https://user-images.githubusercontent.com/63235947/178444419-1e14c0a4-25e7-4bfa-9d3d-fdfc4bb34255.png)|![루희님](https://user-images.githubusercontent.com/63235947/178444351-6389d87f-2321-4d05-8b43-ade596421824.png)
 |:-:|:-:|
 |[🍺 후니팍 🍺](https://github.com/shb03323)|[🥳 후리킴 🥳](https://github.com/heerucan)|
-|프로젝트 세팅<br>DB설계<br>Api 생성/배포<br>소셜로그인/푸쉬알림<br>테스트 구축|DB설계<br>Api 생성<br>AWS 배포/s3<br>슬랙 웹훅 연동 |
+|프로젝트 세팅<br>DB설계 / Api 생성 / 배포<br>소셜로그인 / 푸쉬알림<br>mocha 테스트 구축 / husky git hook 구현|DB설계<br>Api 생성<br>AWS 배포 / s3<br>Slack webhook 연동 |
 
 <br>
 
@@ -33,8 +33,8 @@
 <br>
 
 # ☁️ Foldering
-![26](https://user-images.githubusercontent.com/63235947/178440533-fe268c68-d925-4679-9d5c-f39a0b3831e3.png)
-![28](https://user-images.githubusercontent.com/63235947/178440541-349250f2-f2d2-474b-83fe-b5e13def2db7.png)
+![26](https://user-images.githubusercontent.com/63235947/180354046-e3d5f86e-7a22-4077-ac8f-12c895198886.png)
+![28](https://user-images.githubusercontent.com/63235947/180354064-ea010dfa-b827-4545-9944-7b5ce5783459.png)
 
 <br>
 
