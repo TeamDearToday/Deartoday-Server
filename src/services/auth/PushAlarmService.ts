@@ -49,7 +49,7 @@ const pushAlarm = async (fcmTokens: string[], lastMessage: string) => {
       tokens: fcmTokens,
     };
 
-    agenda.define('pushAlarm', async () => {
+    agenda.define('pushAlarm', async (job, done) => {
       admin
         .messaging()
         .sendMulticast(message)
@@ -59,30 +59,18 @@ const pushAlarm = async (fcmTokens: string[], lastMessage: string) => {
         .catch(function (err) {
           console.log('Error Sending message!!! : ', err);
         });
-      //await job.remove();
+      done();
+      await job.remove();
     });
     
     // 3초 후 구하기
     const now = new Date();
-    now.setSeconds(now.getSeconds() + 10);
+    now.setSeconds(now.getSeconds() + 5);
     
     // 스케줄
-    const job = agenda.schedule(now, "pushAlarm", null);
-    (await job).save();
+    agenda.schedule(now, "pushAlarm", null);
     agenda.start();
-    //(await job).remove();
-
-    // admin
-    //   .messaging()
-    //   .sendMulticast(message)
-    //   .then(function (res) {
-    //     console.log('Successfully sent message: : ', res);
-    //   })
-    //   .catch(function (err) {
-    //     console.log('Error Sending message!!! : ', err);
-    //   });
-    // agenda.schedule("after 10 seconds", "pushAlarm", null);
-    // agenda.start();
+    
   } catch (error) {
     console.log(error);
     throw error;
