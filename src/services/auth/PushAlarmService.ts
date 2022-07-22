@@ -23,8 +23,7 @@ admin.initializeApp({
 
 // agenda setting
 const agenda = new Agenda({
-  db: { address: config.mongoURI },
-  name: 'scheduling'
+  db: { address: config.mongoURI, collection: "agendaJobs" }
 })
 
 const pushAlarm = async (fcmTokens: string[], lastMessage: string) => {
@@ -50,15 +49,37 @@ const pushAlarm = async (fcmTokens: string[], lastMessage: string) => {
       tokens: fcmTokens,
     };
 
-    admin
-      .messaging()
-      .sendMulticast(message)
-      .then(function (res) {
-        console.log('Successfully sent message: : ', res);
-      })
-      .catch(function (err) {
-        console.log('Error Sending message!!! : ', err);
-      });
+    agenda.define('pushAlarm', async (job: any) => {
+      admin
+        .messaging()
+        .sendMulticast(message)
+        .then(function (res) {
+          console.log('Successfully sent message: : ', res);
+        })
+        .catch(function (err) {
+          console.log('Error Sending message!!! : ', err);
+        });
+    });
+    
+    // 3초 후 구하기
+    const now = new Date();
+    now.setSeconds(now.getSeconds() + 3);
+    
+    // 스케줄
+    agenda.schedule(now, "pushAlarm", null);
+    agenda.start();
+
+    // admin
+    //   .messaging()
+    //   .sendMulticast(message)
+    //   .then(function (res) {
+    //     console.log('Successfully sent message: : ', res);
+    //   })
+    //   .catch(function (err) {
+    //     console.log('Error Sending message!!! : ', err);
+    //   });
+    // agenda.schedule("after 10 seconds", "pushAlarm", null);
+    // agenda.start();
   } catch (error) {
     console.log(error);
     throw error;
